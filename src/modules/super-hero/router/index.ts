@@ -1,6 +1,7 @@
+import { ObjectIndexer } from '@/interfaces';
 import { BaseLayout } from '@/layouts';
 
-const getDetailRoute = (): Promise<typeof import('SuperHeroDetail.vue')> =>
+const getDetailRoute = (): Promise<unknown> =>
   import('@/modules/super-hero/views/SuperHeroDetail/SuperHeroDetail.vue');
 
 export default {
@@ -10,7 +11,7 @@ export default {
     {
       path: '',
       name: 'SuperHeroGrid',
-      component: (): Promise<typeof import('SuperHeroGrid.vue')> =>
+      component: (): Promise<unknown> =>
         import('@/modules/super-hero/views/SuperHeroGrid/SuperHeroGrid.vue'),
     },
     {
@@ -22,8 +23,11 @@ export default {
       path: 'detail/:id',
       name: 'SuperHeroDetail',
       component: getDetailRoute,
-      props: (route: { params: { id: string } }): { id: string } => ({
+      props: (
+        route: ObjectIndexer<ObjectIndexer<string>>,
+      ): ObjectIndexer<string | boolean> => ({
         id: route.params.id,
+        view: route.query.view === 'true',
       }),
     },
   ],

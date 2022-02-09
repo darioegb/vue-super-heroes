@@ -18,10 +18,7 @@ const actions: ActionTree<SuperHeroState, State> = {
     commit('setSuperHeroes', data.value);
   },
 
-  async getSuperHeroesPage(
-    { commit },
-    payload: RequestGrid<SuperHero>,
-  ): Promise<unknown> {
+  async getSuperHeroesPage({ commit }, payload: RequestGrid<SuperHero>) {
     const httpConfig: HttpConfig = { params: {} };
     const {
       pagination: { descending, page, rowsPerPage, sortBy },
@@ -76,7 +73,7 @@ const actions: ActionTree<SuperHeroState, State> = {
   async deleteSuperHero({ commit }, payload: string) {
     const { exec } = useAxios<SuperHero>(`superHeroes/${payload}`, 'delete');
     await exec();
-    commit('deleteEntry', payload);
+    commit('deleteSuperHero', payload);
   },
 };
 

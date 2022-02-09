@@ -10,10 +10,18 @@
       @request="onRequest"
     >
       <template #header="props">
-        <GridTableHead :table-props="props" />
+        <GridTableHead
+          :table-props="props"
+          @additem-click="handlerAddOrEditOrView"
+        />
       </template>
       <template #body="props">
-        <GridItem :table-props="props" />
+        <GridItem
+          :table-props="props"
+          @viewitem-click="handlerAddOrEditOrView"
+          @edititem-click="handlerAddOrEditOrView"
+          @deleteitem-click="handlerDelete"
+        />
       </template>
       <template #top>
         <GridTop @change="handleFilterChange" />
@@ -28,6 +36,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 import { defaultPageConfig, GenreEnum, rowsPerPageConfig } from '@/constant';
 import { Column, PageConfig, RequestGrid } from '@/interfaces';
@@ -41,8 +50,10 @@ export default defineComponent({
   components: { GridTableHead, GridItem, GridTop, EmptyGrid },
   setup() {
     const { t: translate } = useI18n({ inheritLocale: true });
+    const router = useRouter();
     const { dropdownTranslate } = useCustomTranslate();
-    const { superHeroes, getSuperHeroesPage, getSuperHeroes } = useSuperHero();
+    const { superHeroes, getSuperHeroesPage, getSuperHeroes, deleteSuperHero } =
+      useSuperHero();
     const rows = ref<SuperHero[]>([]);
     const filter = ref<string>('');
     const pagination = ref<PageConfig<SuperHero>>(defaultPageConfig);
@@ -114,6 +125,22 @@ export default defineComponent({
       pagination.value.rowsNumber = count;
     };
 
+    const handlerAddOrEditOrView = (id?: string, view?: string) => {
+      if (!id) {
+        router.push({ name: 'SuperHeroNew' });
+      } else {
+        router.push({
+          name: 'SuperHeroDetail',
+          params: { id },
+          query: view ? { view } : undefined,
+        });
+      }
+    };
+    const handlerDelete = async (id: string) => {
+      await deleteSuperHero(id);
+      onRequest({ pagination: pagination.value, filter: filter.value });
+    };
+
     return {
       rowsPerPageConfig,
       filter,
@@ -123,6 +150,8 @@ export default defineComponent({
       onRequest,
       translate,
       handleFilterChange,
+      handlerAddOrEditOrView,
+      handlerDelete,
     };
   },
 });
