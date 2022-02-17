@@ -15,23 +15,14 @@
   </q-input>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { defineEmits, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-export default defineComponent({
-  name: 'GridTop',
-  emits: ['change'],
-  setup(_, { emit }) {
-    const { t: translate } = useI18n({ inheritLocale: true });
-    const filter = ref<string>('');
-    const handleChange = (value: string) => emit('change', value);
-
-    return {
-      filter,
-      handleChange,
-      translate,
-    };
-  },
-});
+const emit = defineEmits<{
+  (event: 'change', value: string): void;
+}>();
+const { t: translate } = useI18n({ inheritLocale: true });
+const filter = ref<string>('');
+const handleChange = (value: unknown) => emit('change', String(value));
 </script>

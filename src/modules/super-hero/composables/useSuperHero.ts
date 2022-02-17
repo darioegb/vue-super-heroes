@@ -2,7 +2,7 @@ import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { State } from '@/store';
 import { SuperHero } from '../interfaces';
-import { RequestGrid } from '@/interfaces';
+import { HttpStatus, RequestGrid } from '@/interfaces';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useSuperHero = () => {
@@ -28,11 +28,11 @@ export const useSuperHero = () => {
     getSuperHeroes: () => store.dispatch('superHeroes/getSuperHeroes'),
     getSuperHeroesPage: (requestGrid: RequestGrid<SuperHero>) =>
       store.dispatch('superHeroes/getSuperHeroesPage', requestGrid),
-    updateSuperHero: (superHero: SuperHero) =>
+    updateSuperHero: (superHero: SuperHero): Promise<HttpStatus> =>
       store.dispatch('superHeroes/updateSuperHero', superHero),
-    createSuperHero: (superHero: SuperHero) =>
+    createSuperHero: (superHero: SuperHero): Promise<HttpStatus> =>
       store.dispatch('superHeroes/createSuperHero', superHero),
-    deleteSuperHero: (id: string) =>
+    deleteSuperHero: (id: string): Promise<HttpStatus> =>
       store.dispatch('superHeroes/deleteSuperHero', id),
   };
 };

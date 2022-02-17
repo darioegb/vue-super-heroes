@@ -15,8 +15,7 @@
       "form": {
         "agePlaceholder": "Ex. 50",
         "namePlaceholder": "Ex. Superman",
-        "genrePlaceholder": "Male example",
-        "specialtyPlaceHolder": "Ex. Can fly",
+        "specialtyPlaceholder": "Ex. Can fly",
         "heightPlaceholder": "Ex. 1.70m",
         "weightPlaceholder": "Ex. 70kg"
       },
@@ -53,6 +52,7 @@
       "save": "Save",
       "edit": "Edit",
       "delete": "Delete",
+      "reset": "Reset",
       "view": "View"
     },
     "enums": {

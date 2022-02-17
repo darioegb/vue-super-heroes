@@ -2,15 +2,15 @@ import { ActionTree } from 'vuex';
 
 import { State } from '@/store';
 import { SuperHero, SuperHeroState } from '@/modules/super-hero/interfaces';
-import { useAxios } from '@/hooks';
-import { HttpConfig, RequestGrid } from '@/interfaces';
+import { useAxios } from '@/composables';
+import { HttpConfig, HttpStatus, RequestGrid } from '@/interfaces';
 
 const actions: ActionTree<SuperHeroState, State> = {
   async getSuperHeroes({ commit }) {
-    const { data, exec } = useAxios<SuperHero>('superHeroes', 'get');
+    const { data, isError, exec } = useAxios<SuperHero>('superHeroes', 'get');
     await exec();
 
-    if (!data) {
+    if (!data || isError.value) {
       commit('setSuperHeroes', []);
       return;
     }
@@ -35,7 +35,7 @@ const actions: ActionTree<SuperHeroState, State> = {
       httpConfig.params.name_like = filter;
     }
 
-    const { data, count, exec } = useAxios<SuperHero>(
+    const { data, count, isError, exec } = useAxios<SuperHero>(
       'superHeroes',
       'get',
       undefined,
@@ -43,7 +43,7 @@ const actions: ActionTree<SuperHeroState, State> = {
     );
     await exec();
 
-    if (!data) {
+    if (!data || isError.value) {
       commit('setSuperHeroes', []);
       return;
     }
@@ -53,27 +53,45 @@ const actions: ActionTree<SuperHeroState, State> = {
   },
 
   async updateSuperHero({ commit }, payload: SuperHero) {
-    const { data, exec } = useAxios<SuperHero>(
+    const { data, exec, isError } = useAxios<SuperHero>(
       `superHeroes/${payload.id}`,
       'put',
       payload,
     );
     await exec();
+    if (isError.value) {
+      return { ok: false };
+    }
 
     commit('updateSuperHero', { ...(data && data.value) });
+    return { ok: true };
   },
 
   async createSuperHero({ commit }, payload: SuperHero) {
-    const { exec } = useAxios<SuperHero>('superHeroes', 'post', payload);
+    const { exec, isError } = useAxios<SuperHero>(
+      'superHeroes',
+      'post',
+      payload,
+    );
     await exec();
-
+    if (isError.value) {
+      return { ok: false };
+    }
     commit('addSuperHero', payload);
+    return { ok: true };
   },
 
-  async deleteSuperHero({ commit }, payload: string) {
-    const { exec } = useAxios<SuperHero>(`superHeroes/${payload}`, 'delete');
+  async deleteSuperHero({ commit }, payload: string): Promise<HttpStatus> {
+    const { exec, isError } = useAxios<SuperHero>(
+      `superHeroes/${payload}`,
+      'delete',
+    );
     await exec();
+    if (isError.value) {
+      return { ok: false };
+    }
     commit('deleteSuperHero', payload);
+    return { ok: true };
   },
 };
 

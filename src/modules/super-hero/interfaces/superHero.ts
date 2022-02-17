@@ -4,7 +4,7 @@ import { GenericOrUndefined } from '@/types';
 export interface SuperHero {
   id?: string;
   name: string;
-  genre: GenreEnum;
+  genre: GenreEnum | null;
   specialty: string;
   age?: number;
   height?: number;

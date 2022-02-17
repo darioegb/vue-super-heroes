@@ -9,15 +9,16 @@
   </q-tr>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
 
-export default defineComponent({
-  name: 'GridTableHead',
-  props: ['tableProps'],
-  emits: ['additemClick'],
-  setup: (_, { emit }) => ({
-    onAddItemClicked: () => emit('additemClick'),
-  }),
-});
+import { Column } from '@/interfaces';
+
+defineProps<{
+  tableProps: { cols: Column<unknown>[] };
+}>();
+const emit = defineEmits<{
+  (event: 'additemClick'): void;
+}>();
+const onAddItemClicked = () => emit('additemClick');
 </script>

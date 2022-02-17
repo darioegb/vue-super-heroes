@@ -1,12 +1,14 @@
 <template>
-  <h1>{{ translate('globals.title') }}</h1>
-  <router-view />
+  <section class="app">
+    <h1>{{ translate('globals.title') }}</h1>
+    <router-view />
+  </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useAxiosLoader } from './hooks';
+import { useAxiosLoader } from './composables';
 
 export default defineComponent({
   setup() {
@@ -21,7 +23,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-#app {
+.app {
   padding: 1%;
   h1 {
     font-size: 1.5rem;

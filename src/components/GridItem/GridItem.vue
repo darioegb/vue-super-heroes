@@ -26,50 +26,43 @@
   </q-tr>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
 import { Column, ObjectIndexer } from '@/interfaces';
 
-export default defineComponent({
-  name: 'GridItem',
-  props: ['tableProps'],
-  emits: ['viewitemClick', 'edititemClick', 'deleteitemClick'],
-  setup(_, { emit }) {
-    const $quasar = useQuasar();
-    const { t: translate } = useI18n({ inheritLocale: true });
+defineProps<{
+  tableProps: { cols: Column<unknown>[]; row: ObjectIndexer<unknown> };
+}>();
+const emit = defineEmits<{
+  (event: 'viewitemClick', item: ObjectIndexer<unknown>, view: boolean): void;
+  (event: 'edititemClick', item: ObjectIndexer<unknown>): void;
+  (event: 'deleteitemClick', id: string): void;
+}>();
+const $quasar = useQuasar();
+const { t: translate } = useI18n({ inheritLocale: true });
 
-    const getRowValue = (
-      { format, name }: Column<unknown>,
-      row: ObjectIndexer<unknown>,
-    ) => (format ? format(row[name]) : row[name] || '-');
+const getRowValue = (
+  { format, name }: Column<unknown>,
+  row: ObjectIndexer<unknown>,
+) => (format ? format(row[name]) : row[name] || '-');
 
-    const onViewItemClicked = (row: ObjectIndexer<unknown>) =>
-      emit('viewitemClick', row.id, true);
+const onViewItemClicked = (row: ObjectIndexer<unknown>) =>
+  emit('viewitemClick', row, true);
 
-    const onEditItemClicked = (row: ObjectIndexer<unknown>) =>
-      emit('edititemClick', row.id);
+const onEditItemClicked = (row: ObjectIndexer<unknown>) =>
+  emit('edititemClick', row);
 
-    const onDeleteItemClicked = (row: ObjectIndexer<unknown>) => {
-      $quasar
-        .dialog({
-          message: translate('globals.dialogs.delete.title', {
-            value: row.name,
-          }),
-          cancel: true,
-          persistent: true,
-        })
-        .onOk(() => emit('deleteitemClick', row.id));
-    };
-
-    return {
-      getRowValue,
-      onViewItemClicked,
-      onEditItemClicked,
-      onDeleteItemClicked,
-    };
-  },
-});
+const onDeleteItemClicked = (row: ObjectIndexer<unknown>) =>
+  $quasar
+    .dialog({
+      message: translate('globals.dialogs.delete.title', {
+        value: row.name,
+      }),
+      cancel: true,
+      persistent: true,
+    })
+    .onOk(() => emit('deleteitemClick', row.id as string));
 </script>

@@ -9,6 +9,10 @@ export interface RequestState<T> {
 }
 
 export interface HttpConfig {
-  headers?: ObjectIndexer<unknown>;
+  headers?: ObjectIndexer<string | number | boolean>;
   params?: ObjectIndexer<unknown>;
+}
+
+export interface HttpStatus {
+  ok: boolean;
 }

@@ -15,8 +15,7 @@
       "form": {
         "agePlaceholder": "Ej. 50",
         "namePlaceholder": "Ej. Superman",
-        "genrePlaceholder": "Ej. masculino",
-        "specialtyPlaceHolder": "Ej. Puede volar",
+        "specialtyPlaceholder": "Ej. Puede volar",
         "heightPlaceholder": "Ej. 1.70m",
         "weightPlaceholder": "Ej. 70kg"
       },
@@ -53,6 +52,7 @@
       "save": "Guardar",
       "edit": "Editar",
       "delete": "Borrar",
+      "reset": "Limpiar",
       "view": "Ver"
     },
     "enums": {
@@ -70,11 +70,11 @@
   },
   "validations": {
     "required": "El campo es obligatorio.",
-    "maxlength": "La longitud máxima permitida es {param}.",
-    "minlength": "La longitud mínima permitida es {param}.",
+    "maxLength": "La longitud máxima permitida es {max}.",
+    "minLength": "La longitud mínima permitida es {min}.",
     "email": "No es un correo electrónico válido.",
-    "min": "El mínimo permitido es {param}.",
-    "max": "El máximo permitido es {param}.",
+    "minValue": "El mínimo permitido es {min}.",
+    "maxValue": "El máximo permitido es {max}.",
     "pattern": {
       "numeric": "El formato válido es numérico.",
       "alphabet": "El formato válido es alfabético.",
