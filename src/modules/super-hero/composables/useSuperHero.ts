@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { State } from '@/store';
-import { SuperHero } from '../interfaces';
+import { SuperHero } from '@/modules/super-hero/interfaces';
 import { HttpStatus, RequestGrid } from '@/interfaces';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

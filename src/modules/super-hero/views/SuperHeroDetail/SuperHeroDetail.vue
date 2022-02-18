@@ -116,10 +116,10 @@ import {
 } from '@/utils';
 import { GenreEnum, httpMethodKeys } from '@/constant';
 import { useCustomTranslate } from '@/composables';
-import { SuperHero } from '@/modules/super-hero/interfaces';
+import { SuperHero, SuperHeroForm } from '@/modules/super-hero/interfaces';
 import { useSuperHero } from '@/modules/super-hero/composables';
-import { ObjectIndexer, Option } from '@/interfaces';
 import FormCard from '@/components/FormCard/FormCard.vue';
+import { Option } from '@/interfaces';
 
 const props = defineProps<{
   id?: string;
@@ -131,22 +131,24 @@ const { dropdownTranslate } = useCustomTranslate();
 const { selectedSuperHero, updateSuperHero, createSuperHero } = useSuperHero();
 const genres = convertEnumToKeyValueArray(GenreEnum);
 const selectedItem = selectedSuperHero.value;
-console.log(selectedItem);
+
 const initialState = () => ({
   name: '',
-  genre: null,
+  genre: undefined,
   specialty: '',
   age: undefined,
   height: undefined,
   weight: undefined,
 });
-const state = reactive<SuperHero>(
+
+const getGenreByValue = (value: string | GenreEnum): Option =>
+  genres.find((g) => g.value === value) || genres[0];
+
+const state = reactive<SuperHeroForm>(
   props.id && selectedItem
     ? {
         ...selectedItem,
-        genre: genres.find(
-          (g) => g.value === (selectedItem.genre as unknown as string),
-        ) as unknown as GenreEnum,
+        genre: getGenreByValue(selectedItem.genre),
       }
     : initialState(),
 );
@@ -170,11 +172,13 @@ const v$ = useVuelidate(rules, state);
 const onSubmit = async () => {
   v$.value.$touch();
   if (v$.value.$invalid) return;
-  const isNew = !state?.id;
+  const isNew = !selectedItem?.id;
   const actionType = isNew ? httpMethodKeys.post : httpMethodKeys.put;
   const data: SuperHero = {
     ...state,
-    genre: +(state.genre as unknown as Option).value,
+    id: selectedItem?.id,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    genre: +state.genre!.value,
   };
   const status = isNew
     ? await createSuperHero(data)

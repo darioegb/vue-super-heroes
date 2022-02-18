@@ -1,14 +1,21 @@
 import { GenreEnum } from '@/constant';
+import { Option } from '@/interfaces';
 import { GenericOrUndefined } from '@/types';
 
-export interface SuperHero {
-  id?: string;
+interface SuperHeroCommons {
   name: string;
-  genre: GenreEnum | null;
   specialty: string;
   age?: number;
   height?: number;
   weight?: number;
+}
+export interface SuperHero extends SuperHeroCommons {
+  id?: string;
+  genre: GenreEnum;
+}
+
+export interface SuperHeroForm extends SuperHeroCommons {
+  genre?: Option;
 }
 
 export interface SuperHeroState {
