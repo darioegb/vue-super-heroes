@@ -1,7 +1,20 @@
 <template>
   <q-tr :props="tableProps">
-    <q-td v-for="col in tableProps.cols" :key="col.name" :props="tableProps">
-      {{ getRowValue(col, tableProps.row) }}
+    <q-td
+      v-for="col in tableProps.cols"
+      :key="col.name"
+      :props="tableProps"
+      :class="{ wrap: col.isWrap }"
+    >
+      <span v-if="!col.isImg">
+        {{ getRowValue(col, tableProps.row) }}
+      </span>
+      <q-img
+        v-else
+        spinner-color="blue"
+        fit="scale-down"
+        :src="tableProps.row[col.name] || require('@/assets/img/no-image.png')"
+      />
     </q-td>
     <q-td class="text-right">
       <q-btn
@@ -47,7 +60,7 @@ const { t: translate } = useI18n({ inheritLocale: true });
 const getRowValue = (
   { format, name }: Column<unknown>,
   row: ObjectIndexer<unknown>,
-) => (format ? format(row[name]) : row[name] || '-');
+): unknown => (format ? format(row[name]) : row[name] || '-');
 
 const onViewItemClicked = (row: ObjectIndexer<unknown>) =>
   emit('viewitemClick', row, true);

@@ -21,6 +21,21 @@
           />
         </div>
         <div class="col">
+          <q-input
+            filled
+            type="number"
+            v-model.number="age"
+            :readonly="view"
+            :label="translate('superHeroes.grid.columns.age')"
+            :hint="translate('superHeroes.detail.form.agePlaceholder')"
+            :error-message="v$.age.$errors[0]?.$message.toString()"
+            :error="v$.age.$error"
+            @blur="v$.age.$touch"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
           <q-select
             filled
             v-model="genre"
@@ -40,11 +55,10 @@
             @blur="v$.genre.$touch"
           />
         </div>
-      </div>
-      <div class="row">
         <div class="col">
           <q-input
             filled
+            autogrow
             type="textarea"
             v-model="specialty"
             :readonly="view"
@@ -53,19 +67,6 @@
             :error-message="v$.specialty.$errors[0]?.$message.toString()"
             :error="v$.specialty.$error"
             @blur="v$.specialty.$touch"
-          />
-        </div>
-        <div class="col">
-          <q-input
-            filled
-            type="number"
-            v-model.number="age"
-            :readonly="view"
-            :label="translate('superHeroes.grid.columns.age')"
-            :hint="translate('superHeroes.detail.form.agePlaceholder')"
-            :error-message="v$.age.$errors[0]?.$message.toString()"
-            :error="v$.age.$error"
-            @blur="v$.age.$touch"
           />
         </div>
       </div>
@@ -89,20 +90,26 @@
             type="number"
             v-model.number="weight"
             :readonly="view"
-            :label="translate('superHeroes.grid.columns.weight')"
-            :hint="translate('superHeroes.detail.form.weightPlaceholder')"
+            :label="translate('superHeroes.grid.columns.picture')"
             :error-message="v$.weight.$errors[0]?.$message.toString()"
             :error="v$.weight.$error"
             @blur="v$.weight.$touch"
           />
         </div>
       </div>
+      <form-img-upload
+        :is-uploading="isUploading"
+        :seleted-item-picture="selectedItem?.picture"
+        v-model:picture="picture"
+        :view="view"
+        @download-url-change="saveOrUpdate($event)"
+      />
     </form-card>
   </form>
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, computed, toRefs } from 'vue';
+import { defineProps, reactive, computed, ref, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { useQuasar } from 'quasar';
@@ -118,8 +125,8 @@ import { GenreEnum, httpMethodKeys } from '@/constant';
 import { useCustomTranslate } from '@/composables';
 import { SuperHero, SuperHeroForm } from '@/modules/super-hero/interfaces';
 import { useSuperHero } from '@/modules/super-hero/composables';
-import FormCard from '@/components/FormCard/FormCard.vue';
 import { Option } from '@/interfaces';
+import { FormCard, FormImgUpload } from '@/components';
 
 const props = defineProps<{
   id?: string;
@@ -131,6 +138,7 @@ const { dropdownTranslate } = useCustomTranslate();
 const { selectedSuperHero, updateSuperHero, createSuperHero } = useSuperHero();
 const genres = convertEnumToKeyValueArray(GenreEnum);
 const selectedItem = selectedSuperHero.value;
+const isUploading = ref<boolean>(false);
 
 const initialState = () => ({
   name: '',
@@ -138,6 +146,7 @@ const initialState = () => ({
   specialty: '',
   age: undefined,
   height: undefined,
+  picture: undefined,
   weight: undefined,
 });
 
@@ -149,10 +158,11 @@ const state = reactive<SuperHeroForm>(
     ? {
         ...selectedItem,
         genre: getGenreByValue(selectedItem.genre),
+        picture: undefined,
       }
     : initialState(),
 );
-const { name, genre, specialty, age, height, weight } = toRefs(state);
+const { name, genre, specialty, age, height, picture, weight } = toRefs(state);
 
 const rules = computed(() => ({
   name: { required, minLength: minLength(1), maxLength: maxLength(10) },
@@ -169,16 +179,24 @@ const rules = computed(() => ({
 
 const v$ = useVuelidate(rules, state);
 
-const onSubmit = async () => {
+const onSubmit = () => {
   v$.value.$touch();
   if (v$.value.$invalid) return;
+  if (picture?.value) {
+    isUploading.value = true;
+  } else {
+    saveOrUpdate();
+  }
+};
+
+const saveOrUpdate = async (downloadURL?: string) => {
   const isNew = !selectedItem?.id;
   const actionType = isNew ? httpMethodKeys.post : httpMethodKeys.put;
   const data: SuperHero = {
     ...state,
     id: selectedItem?.id,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    genre: +state.genre!.value,
+    picture: downloadURL ? downloadURL : selectedItem?.picture,
+    genre: (state.genre && +state.genre.value) || GenreEnum.Male,
   };
   const status = isNew
     ? await createSuperHero(data)

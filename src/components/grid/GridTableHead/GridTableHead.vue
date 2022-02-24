@@ -1,6 +1,11 @@
 <template>
   <q-tr :props="tableProps">
-    <q-th v-for="col in tableProps.cols" :key="col.name" :props="tableProps">
+    <q-th
+      v-for="col in tableProps.cols"
+      :key="col.name"
+      :props="tableProps"
+      :class="{ wrap: col.isWrap }"
+    >
       {{ col.label }}
     </q-th>
     <q-th class="text-right">

@@ -5,21 +5,13 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+
 import { useAxiosLoader } from './composables';
 
-export default defineComponent({
-  setup() {
-    const { t: translate } = useI18n({ inheritLocale: true });
-    useAxiosLoader();
-
-    return {
-      translate,
-    };
-  },
-});
+const { t: translate } = useI18n({ inheritLocale: true });
+useAxiosLoader();
 </script>
 
 <style lang="scss" scoped>

@@ -11,11 +11,13 @@ interface SuperHeroCommons {
 }
 export interface SuperHero extends SuperHeroCommons {
   id?: string;
+  picture?: string;
   genre: GenreEnum;
 }
 
 export interface SuperHeroForm extends SuperHeroCommons {
   genre?: Option;
+  picture?: File;
 }
 
 export interface SuperHeroState {

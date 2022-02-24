@@ -8,9 +8,8 @@
     <q-btn
       :label="translate('globals.buttons.reset')"
       type="reset"
-      color="primary"
-      flat
       class="q-ml-sm"
+      :disable="isEditOrView"
     />
     <q-btn
       :label="translate('globals.buttons.cancel')"
@@ -23,8 +22,11 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 const { t: translate } = useI18n({ inheritLocale: true });
+const route = useRoute();
+const isEditOrView = !!route.params?.id;
 
 const goBack = () => history.back();
 </script>

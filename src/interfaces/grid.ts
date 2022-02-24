@@ -7,6 +7,8 @@ export interface Column<T> {
   sortable: boolean;
   align?: Align;
   required?: boolean;
+  isImg?: boolean;
+  isWrap?: boolean;
   sort?: (a: string, b: string) => number;
   format?: (value: unknown) => string;
 }

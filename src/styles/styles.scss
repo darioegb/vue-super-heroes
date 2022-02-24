@@ -1,3 +1,6 @@
+@import './quasar.scss';
+;
+
 .my-sticky-header-table {
   /* height or max-height is important */
   max-height: 800px;
@@ -22,4 +25,25 @@
     /* height of all previous header rows */
     top: 48px;
   }
+}
+.q-table td.wrap,
+.q-table th.wrap {
+  /* don't shorten cell contents */
+  // white-space: normal;
+  white-space: break-spaces;
+  max-width: 10rem;
+
+  @media (max-width: $breakpoint-md-min) {
+    overflow: scroll;
+    hyphens: auto;
+    white-space: nowrap;
+  }
+}
+
+.picture {
+  max-height: 22rem;
+  div {
+    max-height: 20rem;
+  }
+  padding-block-end: 1rem;
 }

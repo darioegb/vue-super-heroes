@@ -64,9 +64,9 @@ const pagination = ref<PageConfig<SuperHero>>(defaultPageConfig);
 const columns: Column<SuperHero>[] = [
   {
     name: 'name',
+    align: 'left',
     label: translate('superHeroes.grid.columns.name'),
     field: (row: SuperHero) => row.name,
-    align: 'left',
     sortable: true,
   },
   {
@@ -80,9 +80,11 @@ const columns: Column<SuperHero>[] = [
   },
   {
     name: 'specialty',
+    align: 'left',
     label: translate('superHeroes.grid.columns.specialty'),
     field: 'specialty',
     sortable: true,
+    isWrap: true,
   },
   {
     name: 'age',
@@ -90,19 +92,25 @@ const columns: Column<SuperHero>[] = [
     field: 'age',
     sortable: true,
   },
-
   {
     name: 'height',
     label: translate('superHeroes.grid.columns.height'),
     field: 'height',
     sortable: true,
   },
-
   {
     name: 'weight',
     label: translate('superHeroes.grid.columns.weight'),
     field: 'weight',
     sortable: true,
+  },
+  {
+    name: 'picture',
+    align: 'center',
+    label: translate('superHeroes.grid.columns.picture'),
+    field: 'picture',
+    sortable: false,
+    isImg: true,
   },
 ];
 

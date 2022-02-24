@@ -1,5 +1,7 @@
 import { PageConfig } from '@/interfaces';
 
+export const assetRoot = '@/assets';
+export const imgSrc = `${assetRoot}/img`;
 export const idKey = 'id';
 export const httpMethodKeys = {
   get: 'get',
@@ -18,3 +20,4 @@ export const defaultPageConfig: PageConfig<unknown> = {
 export const regExp = {
   alphabet: /^[A-Za-z ]*$/,
 };
+export const pictureBasePath = 'pictures';

@@ -1,3 +1,7 @@
+import { ref, StorageReference } from 'firebase/storage';
+
+import { firebaseStorage } from '@/config/firebase';
+import { pictureBasePath } from '@/constant';
 import { Option } from '@/interfaces';
 
 /**
@@ -19,3 +23,21 @@ export const convertEnumToKeyValueArray = <T extends unknown>(
     (key) =>
       ({ key, value: type[key as keyof typeof type] as unknown } as Option),
   );
+
+/**
+ * Convert file to base64 string.
+ * @param file File
+ * @returns Promise<unknown>
+ */
+export const fileToBase64String = (file: File): Promise<string> => {
+  const reader = new FileReader();
+  return new Promise((resolve) => {
+    reader.readAsDataURL(file);
+    reader.onload = (): void => resolve(reader.result as string);
+  });
+};
+
+export const fileRef = (fileName: string): StorageReference =>
+  ref(firebaseStorage, `${pictureBasePath}/${fileName}`);
+
+export const fileName = (): string => `picture-${Date.now()}`;
