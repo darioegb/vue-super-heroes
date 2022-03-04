@@ -109,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, computed, ref, toRefs } from 'vue';
+import { reactive, computed, ref, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useVuelidate from '@vuelidate/core';
 import { useQuasar } from 'quasar';

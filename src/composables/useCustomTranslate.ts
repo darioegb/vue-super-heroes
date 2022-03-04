@@ -1,8 +1,8 @@
-import { ObjectNumberIndexer } from '@/interfaces';
 import { useI18n } from 'vue-i18n';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const useCustomTranslate = () => {
+import { CustomTranslateResponse, ObjectNumberIndexer } from '@/interfaces';
+
+export const useCustomTranslate = (): CustomTranslateResponse => {
   const { t: translate } = useI18n({ inheritLocale: true });
   const dropdownTranslate = <T extends ObjectNumberIndexer>(
     path: string,

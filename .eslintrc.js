@@ -10,6 +10,10 @@ module.exports = {
     '@vue/prettier',
     '@vue/prettier/@typescript-eslint',
   ],
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
+  },
   parserOptions: {
     ecmaVersion: 2020,
   },
@@ -26,10 +30,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
-      ],
+      files: ['**/src/**/*.spec.{j,t}s?(x)'],
       env: {
         jest: true,
       },

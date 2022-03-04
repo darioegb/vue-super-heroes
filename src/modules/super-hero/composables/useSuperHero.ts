@@ -1,11 +1,10 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { State } from '@/store';
-import { SuperHero } from '@/modules/super-hero/interfaces';
+import { SuperHero, SuperHeroResponse } from '@/modules/super-hero/interfaces';
 import { HttpStatus, RequestGrid } from '@/interfaces';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const useSuperHero = () => {
+export const useSuperHero = (): SuperHeroResponse => {
   const store = useStore<State>();
 
   return {

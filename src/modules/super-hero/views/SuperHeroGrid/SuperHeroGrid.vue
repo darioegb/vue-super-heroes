@@ -124,7 +124,7 @@ const onRequest = async (props: unknown) => {
   const { pagination: newPagination, filter: newFilter } =
     props as RequestGrid<SuperHero>;
   const { page, rowsPerPage, sortBy, descending } = newPagination;
-  const count: number =
+  const count =
     rowsPerPage !== 0
       ? await getSuperHeroesPage({
           pagination: newPagination,
@@ -136,7 +136,7 @@ const onRequest = async (props: unknown) => {
   pagination.value.rowsPerPage = rowsPerPage;
   pagination.value.sortBy = sortBy;
   pagination.value.descending = descending;
-  pagination.value.rowsNumber = count;
+  pagination.value.rowsNumber = count || undefined;
 };
 
 const handlerAddOrEditOrView = (item?: unknown, view?: boolean) => {

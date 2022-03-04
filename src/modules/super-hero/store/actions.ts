@@ -5,9 +5,14 @@ import { SuperHero, SuperHeroState } from '@/modules/super-hero/interfaces';
 import { useAxios } from '@/composables';
 import { HttpConfig, HttpStatus, RequestGrid } from '@/interfaces';
 
+const resourceUrl = 'superHeroes';
+
 const actions: ActionTree<SuperHeroState, State> = {
   async getSuperHeroes({ commit }) {
-    const { data, isError, exec } = useAxios<SuperHero>('superHeroes', 'get');
+    const { data, isError, exec } = useAxios<SuperHero>({
+      url: resourceUrl,
+      method: 'get',
+    });
     await exec();
 
     if (!data || isError.value) {
@@ -35,12 +40,11 @@ const actions: ActionTree<SuperHeroState, State> = {
       httpConfig.params.name_like = filter;
     }
 
-    const { data, count, isError, exec } = useAxios<SuperHero>(
-      'superHeroes',
-      'get',
-      undefined,
-      httpConfig,
-    );
+    const { data, count, isError, exec } = useAxios<SuperHero>({
+      url: resourceUrl,
+      method: 'get',
+      config: httpConfig,
+    });
     await exec();
 
     if (!data || isError.value) {
@@ -53,11 +57,11 @@ const actions: ActionTree<SuperHeroState, State> = {
   },
 
   async updateSuperHero({ commit }, payload: SuperHero) {
-    const { data, exec, isError } = useAxios<SuperHero>(
-      `superHeroes/${payload.id}`,
-      'put',
-      payload,
-    );
+    const { data, exec, isError } = useAxios<SuperHero>({
+      url: `${resourceUrl}/${payload.id}`,
+      method: 'put',
+      data: payload,
+    });
     await exec();
     if (isError.value) {
       return { ok: false };
@@ -68,11 +72,11 @@ const actions: ActionTree<SuperHeroState, State> = {
   },
 
   async createSuperHero({ commit }, payload: SuperHero) {
-    const { exec, isError } = useAxios<SuperHero>(
-      'superHeroes',
-      'post',
-      payload,
-    );
+    const { exec, isError } = useAxios<SuperHero>({
+      url: resourceUrl,
+      method: 'post',
+      data: payload,
+    });
     await exec();
     if (isError.value) {
       return { ok: false };
@@ -82,10 +86,10 @@ const actions: ActionTree<SuperHeroState, State> = {
   },
 
   async deleteSuperHero({ commit }, payload: string): Promise<HttpStatus> {
-    const { exec, isError } = useAxios<SuperHero>(
-      `superHeroes/${payload}`,
-      'delete',
-    );
+    const { exec, isError } = useAxios<SuperHero>({
+      url: `${resourceUrl}/${payload}`,
+      method: 'delete',
+    });
     await exec();
     if (isError.value) {
       return { ok: false };
