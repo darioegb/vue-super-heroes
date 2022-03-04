@@ -2,7 +2,7 @@ import { ObjectIndexer } from '@/interfaces';
 import { BaseLayout } from '@/layouts';
 
 const getDetailRoute = (): Promise<unknown> =>
-  import('@/modules/super-hero/views/SuperHeroDetail/SuperHeroDetail.vue');
+  import('@/modules/super-hero/pages/SuperHeroDetail/SuperHeroDetail.vue');
 
 export default {
   name: 'superheroes',
@@ -12,7 +12,7 @@ export default {
       path: '',
       name: 'SuperHeroGrid',
       component: (): Promise<unknown> =>
-        import('@/modules/super-hero/views/SuperHeroGrid/SuperHeroGrid.vue'),
+        import('@/modules/super-hero/pages/SuperHeroGrid/SuperHeroGrid.vue'),
     },
     {
       path: 'detail',
