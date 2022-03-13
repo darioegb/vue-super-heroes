@@ -13,7 +13,9 @@
         v-else
         spinner-color="blue"
         fit="scale-down"
-        :src="tableProps.row[col.name] || require('@/assets/img/no-image.png')"
+        :src="
+          tableProps.row[col.name] || require('src/assets/img/no-image.png')
+        "
       />
     </q-td>
     <q-td class="text-right">
@@ -43,31 +45,32 @@
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import { Column, ObjectIndexer } from '@/interfaces';
+import { Column } from 'src/interfaces';
 
 defineProps<{
-  tableProps: { cols: Column<unknown>[]; row: ObjectIndexer<unknown> };
+  tableProps: { cols: Column<unknown>[]; row: Record<string, unknown> };
 }>();
 const emit = defineEmits<{
-  (event: 'viewitemClick', item: ObjectIndexer<unknown>, view: boolean): void;
-  (event: 'edititemClick', item: ObjectIndexer<unknown>): void;
+  (event: 'viewitemClick', item: Record<string, unknown>, view: boolean): void;
+  (event: 'edititemClick', item: Record<string, unknown>): void;
   (event: 'deleteitemClick', id: string): void;
 }>();
 const $quasar = useQuasar();
-const { t: translate } = useI18n({ inheritLocale: true });
+
+const { t: translate } = useI18n({ useScope: 'global' });
 
 const getRowValue = (
   { format, name }: Column<unknown>,
-  row: ObjectIndexer<unknown>,
+  row: Record<string, unknown>
 ): unknown => (format ? format(row[name]) : row[name] || '-');
 
-const onViewItemClicked = (row: ObjectIndexer<unknown>) =>
+const onViewItemClicked = (row: Record<string, unknown>) =>
   emit('viewitemClick', row, true);
 
-const onEditItemClicked = (row: ObjectIndexer<unknown>) =>
+const onEditItemClicked = (row: Record<string, unknown>) =>
   emit('edititemClick', row);
 
-const onDeleteItemClicked = (row: ObjectIndexer<unknown>) =>
+const onDeleteItemClicked = (row: Record<string, unknown>) =>
   $quasar
     .dialog({
       message: translate('globals.dialogs.delete.title', {
@@ -76,5 +79,7 @@ const onDeleteItemClicked = (row: ObjectIndexer<unknown>) =>
       cancel: true,
       persistent: true,
     })
-    .onOk(() => emit('deleteitemClick', row.id as string));
+    .onOk(() => onConfirmDeleteItem(row.id as string));
+
+const onConfirmDeleteItem = (id: string) => emit('deleteitemClick', id);
 </script>

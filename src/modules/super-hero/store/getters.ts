@@ -1,7 +1,7 @@
 import { GetterTree } from 'vuex';
 
-import { State } from '@/store';
-import { SuperHeroState } from '@/modules/super-hero/interfaces';
+import { State } from 'src/store';
+import { SuperHeroState } from 'src/modules/super-hero/interfaces';
 
 const getters: GetterTree<SuperHeroState, State> = {
   superHeroCount(state) {

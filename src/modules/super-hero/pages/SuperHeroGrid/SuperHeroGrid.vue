@@ -36,19 +36,21 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
-import { defaultPageConfig, GenreEnum, rowsPerPageConfig } from '@/constant';
-import { Column, PageConfig, RequestGrid } from '@/interfaces';
-import { useCustomTranslate } from '@/composables';
-import { SuperHero } from '@/modules/super-hero/interfaces';
-import { GridTableHead, GridItem, GridTop, EmptyGrid } from '@/components';
-import { useSuperHero } from '@/modules/super-hero/composables';
+import { defaultPageConfig, GenreEnum, rowsPerPageConfig } from 'src/constant';
+import { Column, PageConfig, RequestGrid } from 'src/interfaces';
+import { useCustomTranslate } from 'src/composables';
+import { SuperHero } from 'src/modules/super-hero/interfaces';
+import { GridTableHead, GridItem, GridTop, EmptyGrid } from 'src/components';
+import { useSuperHero } from 'src/modules/super-hero/composables';
 
 const $quasar = useQuasar();
-const { t: translate } = useI18n({ inheritLocale: true });
+
+const { t: translate } = useI18n({ useScope: 'global' });
+
 const router = useRouter();
 const { dropdownTranslate } = useCustomTranslate();
 const {
@@ -114,8 +116,8 @@ const columns: Column<SuperHero>[] = [
   },
 ];
 
-onMounted(() => {
-  onRequest({ pagination: pagination.value, filter: undefined });
+onMounted(async () => {
+  await onRequest({ pagination: pagination.value, filter: undefined });
 });
 
 const handleFilterChange = (value: string) => (filter.value = value);
@@ -142,10 +144,10 @@ const onRequest = async (props: unknown) => {
 const handlerAddOrEditOrView = (item?: unknown, view?: boolean) => {
   const superHero = item as SuperHero;
   if (!superHero?.id) {
-    router.push({ name: 'SuperHeroNew' });
+    void router.push({ name: 'SuperHeroNew' });
   } else {
     setSelectedSuperHero(superHero);
-    router.push({
+    void router.push({
       name: 'SuperHeroDetail',
       params: { id: superHero.id },
       query: view ? { view: String(view) } : undefined,
@@ -163,6 +165,6 @@ const handlerDelete = async (id: string) => {
     return;
   }
   $quasar.notify(translate('superHeroes.toasts.remove.success'));
-  onRequest({ pagination: pagination.value, filter: filter.value });
+  await onRequest({ pagination: pagination.value, filter: filter.value });
 };
 </script>

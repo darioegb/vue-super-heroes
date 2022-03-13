@@ -31,7 +31,7 @@
           <q-img
             spinner-color="blue"
             fit="scale-down"
-            :src="previewPicture || require('@/assets/img/no-image.png')"
+            :src="previewPicture || require('src/assets/img/no-image.png')"
           />
         </q-card>
       </q-card>
@@ -41,10 +41,17 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import {
+  uploadBytesResumable,
+  getDownloadURL,
+  StorageReference,
+} from 'firebase/storage';
+import { useQuasar } from 'quasar';
+
+import { fileToBase64String, fileRef, fileName } from 'src/utils';
 import { useI18n } from 'vue-i18n';
 
-import { fileToBase64String, fileRef, fileName } from '@/utils';
+const $quasar = useQuasar();
 
 const props = defineProps<{
   isUploading: boolean;
@@ -58,13 +65,13 @@ const emit = defineEmits<{
   (event: 'downloadUrlChange', downloadURL: string): void;
 }>();
 
-const { t: translate } = useI18n({ inheritLocale: true });
+const { t: translate } = useI18n({ useScope: 'global' });
 const previewPicture = ref<string>(props.seletedItemPicture || '');
 const uploadProgress = ref<number>(0);
 
 const unwatch = watch(
   () => props.isUploading,
-  (value) => value && uploadFile(),
+  (value) => value && uploadFile()
 );
 
 const handleChange = async (file: File) => {
@@ -72,7 +79,7 @@ const handleChange = async (file: File) => {
   emit('update:picture', file);
 };
 
-const uploadFile = async () => {
+const uploadFile = () => {
   const file = props.picture;
   if (!file) return;
   const uploadTask = uploadBytesResumable(fileRef(fileName()), file);
@@ -81,15 +88,20 @@ const uploadFile = async () => {
     (snapshot) => {
       uploadProgress.value = snapshot.bytesTransferred / snapshot.totalBytes;
     },
-    (error) => {
-      console.log(error);
+    () => {
+      $quasar.notify({
+        message: translate('globals.toasts.imageError'),
+        type: 'negative',
+      });
     },
-    async () => {
-      const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-      unwatch();
-      emit('downloadUrlChange', downloadURL);
-    },
+    () => void handleFileUpload(uploadTask.snapshot.ref)
   );
+};
+
+const handleFileUpload = async (ref: StorageReference) => {
+  const downloadURL = await getDownloadURL(ref);
+  unwatch();
+  emit('downloadUrlChange', downloadURL);
 };
 </script>
 <style lang="scss" scoped>

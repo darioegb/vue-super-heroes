@@ -13,11 +13,10 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { FormCardActions } from 'src/components';
 
-import { FormCardActions } from '@/components';
-
+const { t: translate } = useI18n({ useScope: 'global' });
 defineProps<{
   title: string;
 }>();
-const { t: translate } = useI18n({ inheritLocale: true });
 </script>

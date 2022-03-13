@@ -1,33 +1,37 @@
-# vue-superheroes
+# Quasar App (test-quasar)
 
-## Project setup
-```
-yarn install
-```
+A Quasar Framework app
 
-### Compiles and hot-reloads for development
-```
-yarn serve
+## Install the dependencies
+
+```bash
+yarn
 ```
 
-### Json server
-To install run `npm install -g json-server` for run it server run `json-server db.json --routes routes.json`
-For more information go to [Json-server](https://github.com/typicode/json-server)
+### Start the app in development mode (hot-code reloading, error reporting, etc.)
 
-### Compiles and minifies for production
-```
-yarn build
+```bash
+quasar dev
 ```
 
-### Run your unit tests
-```
-yarn test:unit
-```
+### Lint the files
 
-### Lints and fixes files
-```
+```bash
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Format the files
+
+```bash
+yarn format
+```
+
+### Build the app for production
+
+```bash
+quasar build
+```
+
+### Customize the configuration
+
+See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).

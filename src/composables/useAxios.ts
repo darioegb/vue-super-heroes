@@ -1,7 +1,7 @@
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, UnwrapRef } from 'vue';
 import axios from 'axios';
 
-import { RequestState, AxiosConfig, AxiosResponse } from '@/interfaces';
+import { RequestState, AxiosConfig, AxiosResponse } from 'src/interfaces';
 
 export const useAxios = <T>({
   url,
@@ -13,7 +13,7 @@ export const useAxios = <T>({
   if (!apiBaseUrl) {
     apiBaseUrl = process.env.VUE_APP_API_BASE_URL;
   }
-  const fullUrl = `${apiBaseUrl}/${url}`;
+  const fullUrl = `${apiBaseUrl as string}/${url}`;
   const initialState = () => ({
     isLoading: true,
     isError: false,
@@ -36,8 +36,11 @@ export const useAxios = <T>({
         params: config?.params,
         data,
       });
-      state.data = response.data;
-      state.count = +response.headers['x-total-count'];
+      state.data = response.data as UnwrapRef<T>;
+      // x-total-change if parameter for json server can be changed
+      state.count = +(response.headers as { 'x-total-count': string })[
+        'x-total-count'
+      ];
     } catch (error: unknown) {
       state.isError = true;
       state.errorMessage = (error as { message: string }).message;

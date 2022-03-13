@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex';
 
-import { SuperHero, SuperHeroState } from '@/modules/super-hero/interfaces';
+import { SuperHero, SuperHeroState } from 'src/modules/super-hero/interfaces';
 
 const mutation: MutationTree<SuperHeroState> = {
   setSuperHeroes(state, payload: SuperHero[]) {
@@ -15,12 +15,12 @@ const mutation: MutationTree<SuperHeroState> = {
   },
   updateSuperHero(state, payload: SuperHero) {
     state.superHeroes.forEach(({ ...superHero }) =>
-      superHero.id === payload.id ? payload : superHero,
+      superHero.id === payload.id ? payload : superHero
     );
   },
   deleteSuperHero(state, payload: string) {
     state.superHeroes = state.superHeroes.filter(
-      ({ ...superHero }) => superHero.id !== payload,
+      ({ ...superHero }) => superHero.id !== payload
     );
     state.selectedSuperHero = undefined;
   },

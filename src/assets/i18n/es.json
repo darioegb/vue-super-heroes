@@ -67,6 +67,9 @@
       "delete": {
         "title": "¿Esta seguro que desea eliminar a {value}?"
       }
+    },
+    "toasts": {
+      "imageError": "Ocurrió un error al subir la imagen"
     }
   },
   "validations": {

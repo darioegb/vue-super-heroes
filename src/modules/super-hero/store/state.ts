@@ -1,4 +1,4 @@
-import { SuperHeroState } from '@/modules/super-hero/interfaces';
+import { SuperHeroState } from 'src/modules/super-hero/interfaces';
 
 function state(): SuperHeroState {
   return {

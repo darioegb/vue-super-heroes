@@ -1,0 +1,56 @@
+import { Column } from 'src/interfaces';
+import { describe, expect, it } from '@jest/globals';
+import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
+import { mount } from '@vue/test-utils';
+
+import GridTableHead from './GridTableHead.vue';
+
+installQuasarPlugin();
+
+const StubParentComponent = {
+  template: `
+  <q-table
+      :rows="rows"
+      :columns="columns"
+    >
+    <template #header="props">
+        <grid-table-head
+          :table-props="props"
+          @additem-click="handlerAddOrEditOrView"
+        />
+    </template>
+  </q-table>
+`,
+  components: {
+    GridTableHead,
+  },
+  data: () => ({
+    columns: [
+      {
+        name: 'name',
+        align: 'left',
+        label: 'Name',
+        field: 'name',
+        sortable: true,
+      },
+    ] as Column<Record<string, unknown>>[],
+    rows: [
+      {
+        name: 'test',
+      },
+    ],
+  }),
+  methods: {
+    handlerAddOrEditOrView: () => null,
+  },
+};
+
+describe('GridTableHead.vue', () => {
+  it('should trigger additemClick event when button is clicked', async () => {
+    const wrapper = mount(StubParentComponent);
+    const child = wrapper.findComponent(GridTableHead as never);
+    const button = wrapper.find('button');
+    await button.trigger('click');
+    expect(child.emitted('additemClick')).toHaveLength(1);
+  });
+});

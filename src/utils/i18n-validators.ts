@@ -1,10 +1,11 @@
 import * as validators from '@vuelidate/validators';
-import i18n from '@/config/i18n';
+import i18n from 'src/config/i18n';
 
 // or import { createI18nMessage } from '@vuelidate/validators'
 const { createI18nMessage } = validators;
 
 // extract the `t` helper, should work for both Vue 2 and Vue 3 versions of vue-i18n
+
 const { t } = i18n.global || i18n;
 
 // pass `t` and create your i18n message instance
