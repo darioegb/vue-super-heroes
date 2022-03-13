@@ -1,4 +1,4 @@
-import { Align } from '@/types';
+import { Align } from 'src/types';
 
 export interface Column<T> {
   name: keyof T;

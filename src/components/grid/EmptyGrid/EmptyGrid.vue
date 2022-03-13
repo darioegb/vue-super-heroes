@@ -9,5 +9,6 @@ import { useI18n } from 'vue-i18n';
 defineProps<{
   filter: string;
 }>();
-const { t: translate } = useI18n({ inheritLocale: true });
+
+const { t: translate } = useI18n({ useScope: 'global' });
 </script>

@@ -1,9 +1,9 @@
 import { ActionTree } from 'vuex';
 
-import { State } from '@/store';
-import { SuperHero, SuperHeroState } from '@/modules/super-hero/interfaces';
-import { useAxios } from '@/composables';
-import { HttpConfig, HttpStatus, RequestGrid } from '@/interfaces';
+import { State } from 'src/store';
+import { SuperHero, SuperHeroState } from 'src/modules/super-hero/interfaces';
+import { useAxios } from 'src/composables';
+import { HttpConfig, HttpStatus, RequestGrid } from 'src/interfaces';
 
 const resourceUrl = 'superHeroes';
 
@@ -58,7 +58,7 @@ const actions: ActionTree<SuperHeroState, State> = {
 
   async updateSuperHero({ commit }, payload: SuperHero) {
     const { data, exec, isError } = useAxios<SuperHero>({
-      url: `${resourceUrl}/${payload.id}`,
+      url: `${resourceUrl}/${payload.id as string}`,
       method: 'put',
       data: payload,
     });

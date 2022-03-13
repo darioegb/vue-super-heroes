@@ -22,7 +22,8 @@ import { useI18n } from 'vue-i18n';
 const emit = defineEmits<{
   (event: 'change', value: string): void;
 }>();
-const { t: translate } = useI18n({ inheritLocale: true });
+
+const { t: translate } = useI18n({ useScope: 'global' });
 const filter = ref<string>('');
 const handleChange = (value: unknown) => emit('change', String(value));
 </script>

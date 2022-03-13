@@ -1,8 +1,8 @@
 import { ref, StorageReference } from 'firebase/storage';
 
-import { firebaseStorage } from '@/config/firebase';
-import { pictureBasePath } from '@/constant';
-import { Option } from '@/interfaces';
+import { firebaseStorage } from 'src/config/firebase';
+import { pictureBasePath } from 'src/constant';
+import { Option } from 'src/interfaces';
 
 /**
  * Get enum keys from enum object
@@ -16,12 +16,10 @@ export const getEnumKeys = <T>(type: T): string[] =>
  * @param type enum
  * @example [ { key: 'A', value: 1 }, { key: 'B', value: 2 } ]
  */
-export const convertEnumToKeyValueArray = <T extends unknown>(
-  type: T,
-): Option[] =>
+export const convertEnumToKeyValueArray = <T>(type: T): Option[] =>
   getEnumKeys(type).map(
     (key) =>
-      ({ key, value: type[key as keyof typeof type] as unknown } as Option),
+      ({ key, value: type[key as keyof typeof type] as unknown } as Option)
   );
 
 /**

@@ -47,7 +47,7 @@
                 dropdownTranslate(
                   'globals.enums.genres',
                   Number(opt.value),
-                  GenreEnum,
+                  GenreEnum
                 )
             "
             :error-message="v$.genre.$errors[0]?.$message.toString()"
@@ -110,7 +110,7 @@
 
 <script setup lang="ts">
 import { reactive, computed, ref, toRefs } from 'vue';
-import { useI18n } from 'vue-i18n';
+
 import useVuelidate from '@vuelidate/core';
 import { useQuasar } from 'quasar';
 
@@ -120,20 +120,23 @@ import {
   minLength,
   minValue,
   convertEnumToKeyValueArray,
-} from '@/utils';
-import { GenreEnum, httpMethodKeys } from '@/constant';
-import { useCustomTranslate } from '@/composables';
-import { SuperHero, SuperHeroForm } from '@/modules/super-hero/interfaces';
-import { useSuperHero } from '@/modules/super-hero/composables';
-import { Option } from '@/interfaces';
-import { FormCard, FormImgUpload } from '@/components';
+} from 'src/utils';
+import { GenreEnum, httpMethodKeys } from 'src/constant';
+import { useCustomTranslate } from 'src/composables';
+import { SuperHero, SuperHeroForm } from 'src/modules/super-hero/interfaces';
+import { useSuperHero } from 'src/modules/super-hero/composables';
+import { Option } from 'src/interfaces';
+import { FormCard, FormImgUpload } from 'src/components';
+import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
   id?: string;
   view?: boolean;
 }>();
 const $quasar = useQuasar();
-const { t: translate } = useI18n({ inheritLocale: true });
+
+const { t: translate } = useI18n({ useScope: 'global' });
+
 const { dropdownTranslate } = useCustomTranslate();
 const { selectedSuperHero, updateSuperHero, createSuperHero } = useSuperHero();
 const genres = convertEnumToKeyValueArray(GenreEnum);
@@ -160,7 +163,7 @@ const state = reactive<SuperHeroForm>(
         genre: getGenreByValue(selectedItem.genre),
         picture: undefined,
       }
-    : initialState(),
+    : initialState()
 );
 const { name, genre, specialty, age, height, picture, weight } = toRefs(state);
 
@@ -185,7 +188,7 @@ const onSubmit = () => {
   if (picture?.value) {
     isUploading.value = true;
   } else {
-    saveOrUpdate();
+    void saveOrUpdate();
   }
 };
 

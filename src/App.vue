@@ -6,12 +6,12 @@
 </template>
 
 <script setup lang="ts">
+import './config/firebase';
 import { useI18n } from 'vue-i18n';
-
 import { useAxiosLoader } from './composables';
 
-const { t: translate } = useI18n({ inheritLocale: true });
 useAxiosLoader();
+const { t: translate } = useI18n({ useScope: 'global' });
 </script>
 
 <style lang="scss" scoped>

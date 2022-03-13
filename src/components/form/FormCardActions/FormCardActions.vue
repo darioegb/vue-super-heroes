@@ -24,7 +24,7 @@
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
-const { t: translate } = useI18n({ inheritLocale: true });
+const { t: translate } = useI18n({ useScope: 'global' });
 const route = useRoute();
 const isEditOrView = !!route.params?.id;
 

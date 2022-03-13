@@ -1,7 +1,6 @@
 import { Ref } from 'vue';
 
-import { HttpMethod } from '@/types';
-import { ObjectIndexer } from './';
+import { HttpMethod } from 'src/types';
 
 export interface RequestState<T> {
   isLoading: boolean;
@@ -12,8 +11,8 @@ export interface RequestState<T> {
 }
 
 export interface HttpConfig {
-  headers?: ObjectIndexer<string | number | boolean>;
-  params?: ObjectIndexer<unknown>;
+  headers?: Record<string, string | number | boolean>;
+  params?: Record<string, unknown>;
 }
 
 export interface HttpStatus {

@@ -1,6 +1,6 @@
-import { PageConfig } from '@/interfaces';
+import { PageConfig } from 'src/interfaces';
 
-export const assetRoot = '@/assets';
+export const assetRoot = 'src/assets';
 export const imgSrc = `${assetRoot}/img`;
 export const idKey = 'id';
 export const httpMethodKeys = {

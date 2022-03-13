@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { Column } from '@/interfaces';
+import { Column } from 'src/interfaces';
 
 defineProps<{
   tableProps: { cols: Column<unknown>[] };
