@@ -1,5 +1,6 @@
 {
   "superHeroes": {
+    "title": "Superhéroes",
     "grid": {
       "columns": {
         "name": "Nombre",
@@ -38,7 +39,7 @@
     }
   },
   "globals": {
-    "title": "Superhéroes",
+    "title": "ABM con quasar",
     "selectDefault": "Ninguno",
     "grid": {
       "filterInput": {

@@ -18,7 +18,7 @@ export interface PageConfig<T> {
   rowsPerPage: number;
   sortBy: keyof T | 'id';
   descending: boolean;
-  rowsNumber?: number;
+  rowsNumber?: number; // Is usefull for server side pagination
 }
 
 export interface RequestGrid<T> {

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 
@@ -20,17 +18,11 @@ export const useSuperHero = (): SuperHeroResponse => {
       () => store.state.superHeroes.selectedSuperHero
     ),
 
-    // Getters
-    superHeroCount: computed<number>(
-      () => store.getters['superHeroes/superHeroCount']
-    ),
-
     // Mutations
     setSelectedSuperHero: (superHero: SuperHero) =>
       store.commit('superHeroes/setSelectedSuperHero', superHero),
 
     // Actions
-    getSuperHeroes: () => store.dispatch('superHeroes/getSuperHeroes'),
     getSuperHeroesPage: (requestGrid: RequestGrid<SuperHero>) =>
       store.dispatch('superHeroes/getSuperHeroesPage', requestGrid),
     updateSuperHero: (superHero: SuperHero): Promise<HttpStatus> =>

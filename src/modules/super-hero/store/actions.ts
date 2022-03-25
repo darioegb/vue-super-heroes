@@ -8,21 +8,6 @@ import { HttpConfig, HttpStatus, RequestGrid } from 'src/interfaces';
 const resourceUrl = 'superHeroes';
 
 const actions: ActionTree<SuperHeroState, State> = {
-  async getSuperHeroes({ commit }) {
-    const { data, isError, exec } = useAxios<SuperHero>({
-      url: resourceUrl,
-      method: 'get',
-    });
-    await exec();
-
-    if (!data || isError.value) {
-      commit('setSuperHeroes', []);
-      return;
-    }
-
-    commit('setSuperHeroes', data.value);
-  },
-
   async getSuperHeroesPage({ commit }, payload: RequestGrid<SuperHero>) {
     const httpConfig: HttpConfig = { params: {} };
     const {
@@ -31,7 +16,7 @@ const actions: ActionTree<SuperHeroState, State> = {
     } = payload;
     httpConfig.params = {
       _page: page,
-      _limit: rowsPerPage,
+      ...(rowsPerPage > 0 && { _limit: rowsPerPage }),
       _sort: sortBy,
       _order: descending ? 'desc' : 'asc',
     };
@@ -47,12 +32,7 @@ const actions: ActionTree<SuperHeroState, State> = {
     });
     await exec();
 
-    if (!data || isError.value) {
-      commit('setSuperHeroes', []);
-      return;
-    }
-
-    commit('setSuperHeroes', data.value);
+    commit('setSuperHeroes', !data || isError.value ? [] : data.value);
     return count?.value;
   },
 

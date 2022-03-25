@@ -3,6 +3,7 @@ import { describe, expect, it, jest, beforeEach } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 import { mount } from '@vue/test-utils';
 import { Notify, QFile } from 'quasar';
+
 import i18n from 'src/config/i18n';
 
 // must define this above the `FormImgUpload` import, otherwise the ReferenceError is raised.
@@ -111,12 +112,11 @@ describe('FormImgUpload.vue', () => {
         picture: file,
       },
     });
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { vm } = wrapper;
+    const { vm } = wrapper as unknown as Record<string, unknown>;
     await wrapper.setProps({ isUploading: true });
-    expect(
-      (vm as unknown as { uploadProgress: number }).uploadProgress
-    ).toBeGreaterThan(0);
+    expect((vm as { uploadProgress: number }).uploadProgress).toBeGreaterThan(
+      0
+    );
     expect(wrapper.emitted('downloadUrlChange')).toBeUndefined();
   });
 
@@ -141,9 +141,10 @@ describe('FormImgUpload.vue', () => {
         picture: file,
       },
     });
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { vm } = wrapper;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const { vm } = wrapper as unknown as Record<
+      string,
+      { $q: { notify: () => unknown } }
+    >;
     const spy = jest.spyOn(vm.$q, 'notify');
     await wrapper.setProps({ isUploading: true });
     expect(spy).toHaveBeenCalled();

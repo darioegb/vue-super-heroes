@@ -2,6 +2,7 @@
   <div class="q-pa-md">
     <q-table
       class="my-sticky-header-table"
+      :title="translate('superHeroes.title')"
       :rows="rows"
       :rows-per-page-options="rowsPerPageConfig"
       :columns="columns"
@@ -24,7 +25,7 @@
           @deleteitem-click="handlerDelete"
         />
       </template>
-      <template #top>
+      <template #top-right>
         <grid-top @change="handleFilterChange" />
       </template>
       <template #no-data>
@@ -56,7 +57,6 @@ const { dropdownTranslate } = useCustomTranslate();
 const {
   superHeroes,
   getSuperHeroesPage,
-  getSuperHeroes,
   deleteSuperHero,
   setSelectedSuperHero,
 } = useSuperHero();
@@ -68,7 +68,7 @@ const columns: Column<SuperHero>[] = [
     name: 'name',
     align: 'left',
     label: translate('superHeroes.grid.columns.name'),
-    field: (row: SuperHero) => row.name,
+    field: 'name',
     sortable: true,
   },
   {
@@ -120,25 +120,25 @@ onMounted(async () => {
   await onRequest({ pagination: pagination.value, filter: undefined });
 });
 
-const handleFilterChange = (value: string) => (filter.value = value);
+const handleFilterChange = (value: unknown) => (filter.value = value as string);
 
 const onRequest = async (props: unknown) => {
   const { pagination: newPagination, filter: newFilter } =
     props as RequestGrid<SuperHero>;
   const { page, rowsPerPage, sortBy, descending } = newPagination;
-  const count =
-    rowsPerPage !== 0
-      ? await getSuperHeroesPage({
-          pagination: newPagination,
-          filter: newFilter,
-        })
-      : await getSuperHeroes();
+  const count = await getSuperHeroesPage({
+    pagination: newPagination,
+    filter: newFilter,
+  });
+
+  if (!count) return;
+
   rows.value = superHeroes.value;
   pagination.value.page = page;
   pagination.value.rowsPerPage = rowsPerPage;
   pagination.value.sortBy = sortBy;
   pagination.value.descending = descending;
-  pagination.value.rowsNumber = count || undefined;
+  pagination.value.rowsNumber = count;
 };
 
 const handlerAddOrEditOrView = (item?: unknown, view?: boolean) => {

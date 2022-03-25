@@ -30,9 +30,7 @@ export interface SuperHeroState {
 export interface SuperHeroResponse {
   superHeroes: ComputedRef<SuperHero[]>;
   selectedSuperHero: ComputedRef<GenericOrUndefined<SuperHero>>;
-  superHeroCount: ComputedRef<number>;
   setSelectedSuperHero: (superHero: SuperHero) => void;
-  getSuperHeroes: () => Promise<void>;
   getSuperHeroesPage: (
     requestGrid: RequestGrid<SuperHero>
   ) => Promise<number | undefined>;

@@ -1,5 +1,6 @@
 {
   "superHeroes": {
+    "title": "Superheroes",
     "grid": {
       "columns": {
         "name": "Name",
@@ -38,7 +39,7 @@
     }
   },
   "globals": {
-    "title": "Superheroes",
+    "title": "CRUD with quasar",
     "selectDefault": "None",
     "grid": {
       "filterInput": {
