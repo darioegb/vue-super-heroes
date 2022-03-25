@@ -1,7 +1,7 @@
 import { ComputedRef } from 'vue';
 
 import { GenreEnum } from 'src/constant';
-import { HttpStatus, Option, RequestGrid } from 'src/interfaces';
+import { Option, RequestGrid } from 'src/interfaces';
 import { GenericOrUndefined } from 'src/types';
 
 interface SuperHeroCommons {
@@ -34,7 +34,7 @@ export interface SuperHeroResponse {
   getSuperHeroesPage: (
     requestGrid: RequestGrid<SuperHero>
   ) => Promise<number | undefined>;
-  updateSuperHero: (superHero: SuperHero) => Promise<HttpStatus>;
-  createSuperHero: (superHero: SuperHero) => Promise<HttpStatus>;
-  deleteSuperHero: (id: string) => Promise<HttpStatus>;
+  updateSuperHero: (superHero: SuperHero) => Promise<boolean>;
+  createSuperHero: (superHero: SuperHero) => Promise<boolean>;
+  deleteSuperHero: (id: string) => Promise<boolean>;
 }

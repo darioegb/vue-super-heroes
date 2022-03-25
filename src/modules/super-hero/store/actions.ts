@@ -3,7 +3,7 @@ import { ActionTree } from 'vuex';
 import { State } from 'src/store';
 import { SuperHero, SuperHeroState } from 'src/modules/super-hero/interfaces';
 import { useAxios } from 'src/composables';
-import { HttpConfig, HttpStatus, RequestGrid } from 'src/interfaces';
+import { HttpConfig, RequestGrid } from 'src/interfaces';
 
 const resourceUrl = 'superHeroes';
 
@@ -36,46 +36,42 @@ const actions: ActionTree<SuperHeroState, State> = {
     return count?.value;
   },
 
-  async updateSuperHero({ commit }, payload: SuperHero) {
+  async updateSuperHero({ commit }, payload: SuperHero): Promise<boolean> {
     const { data, exec, isError } = useAxios<SuperHero>({
       url: `${resourceUrl}/${payload.id as string}`,
       method: 'put',
       data: payload,
     });
     await exec();
-    if (isError.value) {
-      return { ok: false };
-    }
+    if (isError.value) return isError.value;
 
     commit('updateSuperHero', { ...(data && data.value) });
-    return { ok: true };
+    return isError.value;
   },
 
-  async createSuperHero({ commit }, payload: SuperHero) {
+  async createSuperHero({ commit }, payload: SuperHero): Promise<boolean> {
     const { exec, isError } = useAxios<SuperHero>({
       url: resourceUrl,
       method: 'post',
       data: payload,
     });
     await exec();
-    if (isError.value) {
-      return { ok: false };
-    }
+    if (isError.value) return isError.value;
+
     commit('addSuperHero', payload);
-    return { ok: true };
+    return isError.value;
   },
 
-  async deleteSuperHero({ commit }, payload: string): Promise<HttpStatus> {
+  async deleteSuperHero({ commit }, payload: string): Promise<boolean> {
     const { exec, isError } = useAxios<SuperHero>({
       url: `${resourceUrl}/${payload}`,
       method: 'delete',
     });
     await exec();
-    if (isError.value) {
-      return { ok: false };
-    }
+    if (isError.value) return isError.value;
+
     commit('deleteSuperHero', payload);
-    return { ok: true };
+    return isError.value;
   },
 };
 

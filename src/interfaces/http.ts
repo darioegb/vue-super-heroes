@@ -15,10 +15,6 @@ export interface HttpConfig {
   params?: Record<string, unknown>;
 }
 
-export interface HttpStatus {
-  ok: boolean;
-}
-
 export interface AxiosConfig<T> {
   url: string;
   method: HttpMethod;

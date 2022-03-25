@@ -156,8 +156,8 @@ const handlerAddOrEditOrView = (item?: unknown, view?: boolean) => {
 };
 
 const handlerDelete = async (id: string) => {
-  const status = await deleteSuperHero(id);
-  if (!status.ok) {
+  const isError = await deleteSuperHero(id);
+  if (isError) {
     $quasar.notify({
       message: translate('superHeroes.toasts.remove.error'),
       type: 'negative',

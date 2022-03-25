@@ -201,11 +201,11 @@ const saveOrUpdate = async (downloadURL?: string) => {
     picture: downloadURL ? downloadURL : selectedItem?.picture,
     genre: (state.genre && +state.genre.value) || GenreEnum.Male,
   };
-  const status = isNew
+  const isError = isNew
     ? await createSuperHero(data)
     : await updateSuperHero(data);
 
-  if (!status.ok) {
+  if (isError) {
     $quasar.notify({
       message: translate(`superHeroes.toasts.${actionType}.error`),
       type: 'negative',

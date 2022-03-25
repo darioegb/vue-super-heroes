@@ -36,9 +36,6 @@ describe('SuperHeroDetail.vue', () => {
     superHeroes: superHeroesState.superHeroes,
     selectedSuperHero: superHeroesState.superHeroes[0],
   };
-  const file = new File(['foo'], 'foo.png', {
-    type: 'image/png',
-  });
 
   beforeEach(() => {
     store.replaceState({

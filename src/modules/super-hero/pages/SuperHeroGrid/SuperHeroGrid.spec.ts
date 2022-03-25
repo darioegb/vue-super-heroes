@@ -115,7 +115,7 @@ describe('SuperHeroGrid.vue', () => {
       'notify'
     );
     await flushPromises();
-    const childs = wrapper.findAllComponents(GridItem);
+    const childs = wrapper.findAllComponents(GridItem as never);
     const { vm } = childs[0] as unknown as Record<string, VMDelete>;
     vm.$q.dialog = jest.fn().mockReturnThis() as never;
     vm.$q.dialog().onOk = jest.fn(() => vm.onConfirmDeleteItem('1')) as never;
@@ -140,7 +140,7 @@ describe('SuperHeroGrid.vue', () => {
       'notify'
     );
     await flushPromises();
-    const childs = wrapper.findAllComponents(GridItem);
+    const childs = wrapper.findAllComponents(GridItem as never);
     const { vm } = childs[0] as unknown as Record<string, VMDelete>;
     vm.$q.dialog = jest.fn().mockReturnThis() as never;
     vm.$q.dialog().onOk = jest.fn(() => vm.onConfirmDeleteItem('1')) as never;

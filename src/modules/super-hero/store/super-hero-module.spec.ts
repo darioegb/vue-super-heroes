@@ -1,6 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import { defaultPageConfig } from 'src/constant';
-import { HttpStatus } from 'src/interfaces';
 import { SuperHeroState } from 'src/modules/super-hero/interfaces';
 
 const mockFn = jest.fn();
@@ -78,22 +77,22 @@ describe('super-hero-module', () => {
       data: updatedSuperHero,
     } as never);
     const store = createVuexStore();
-    const status = (await store.dispatch(
+    const isError = (await store.dispatch(
       'superHeroes/updateSuperHero',
       updatedSuperHero
-    )) as HttpStatus;
-    expect(status.ok).toBeTruthy();
+    )) as boolean;
+    expect(isError).toBeFalsy();
     expect(store.state.superHeroes.superHeroes[0]).toEqual(updatedSuperHero);
   });
 
   it("should'n updateSuperHero with updateSuperHero action when error occurred", async () => {
     mockFn.mockRejectedValueOnce(new Error('Async Error'));
     const store = createVuexStore();
-    const status = (await store.dispatch(
+    const isError = (await store.dispatch(
       'superHeroes/updateSuperHero',
       updatedSuperHero
-    )) as HttpStatus;
-    expect(status.ok).toBeFalsy();
+    )) as boolean;
+    expect(isError).toBeTruthy();
     expect(store.state.superHeroes.superHeroes[0]).not.toEqual(
       updatedSuperHero
     );
@@ -103,11 +102,11 @@ describe('super-hero-module', () => {
     mockFn.mockReturnValueOnce({});
     const store = createVuexStore();
     const deletedSuperHero = store.state.superHeroes.superHeroes[0];
-    const status = (await store.dispatch(
+    const isError = (await store.dispatch(
       'superHeroes/deleteSuperHero',
       deletedSuperHero.id
-    )) as HttpStatus;
-    expect(status.ok).toBeTruthy();
+    )) as boolean;
+    expect(isError).toBeFalsy();
     expect(store.state.superHeroes.superHeroes.length).toBe(1);
     expect(store.state.superHeroes.superHeroes[0]).not.toEqual(
       deletedSuperHero
@@ -118,11 +117,11 @@ describe('super-hero-module', () => {
     mockFn.mockRejectedValueOnce(new Error('Async Error'));
     const store = createVuexStore();
     const deletedSuperHero = store.state.superHeroes.superHeroes[0];
-    const status = (await store.dispatch(
+    const isError = (await store.dispatch(
       'superHeroes/deleteSuperHero',
       deletedSuperHero.id
-    )) as HttpStatus;
-    expect(status.ok).toBeFalsy();
+    )) as boolean;
+    expect(isError).toBeTruthy();
     expect(store.state.superHeroes.superHeroes.length).toBe(2);
     expect(store.state.superHeroes.superHeroes[0]).toEqual(deletedSuperHero);
   });
@@ -130,22 +129,22 @@ describe('super-hero-module', () => {
   it('should addSuperHero with createSuperHero action', async () => {
     mockFn.mockReturnValueOnce({});
     const store = createVuexStore();
-    const status = (await store.dispatch(
+    const isError = (await store.dispatch(
       'superHeroes/createSuperHero',
       newSuperHero
-    )) as HttpStatus;
-    expect(status.ok).toBeTruthy();
+    )) as boolean;
+    expect(isError).toBeFalsy();
     expect(store.state.superHeroes.superHeroes[2]).toEqual(newSuperHero);
   });
 
   it("should'n addSuperHero with createSuperHero action when error occurred", async () => {
     mockFn.mockRejectedValueOnce(new Error('Async Error'));
     const store = createVuexStore();
-    const status = (await store.dispatch(
+    const isError = (await store.dispatch(
       'superHeroes/createSuperHero',
       newSuperHero
-    )) as HttpStatus;
-    expect(status.ok).toBeFalsy();
+    )) as boolean;
+    expect(isError).toBeTruthy();
     expect(store.state.superHeroes.superHeroes[2]).not.toEqual(newSuperHero);
   });
 });
