@@ -4,27 +4,15 @@ import { State } from 'src/store';
 import { SuperHero, SuperHeroState } from 'src/modules/super-hero/interfaces';
 import { useAxios } from 'src/composables';
 import { HttpConfig, RequestGrid } from 'src/interfaces';
+import { createHttpParams } from 'src/utils';
 
 const resourceUrl = 'superHeroes';
 
 const actions: ActionTree<SuperHeroState, State> = {
   async getSuperHeroesPage({ commit }, payload: RequestGrid<SuperHero>) {
-    const httpConfig: HttpConfig = { params: {} };
-    const {
-      pagination: { descending, page, rowsPerPage, sortBy },
-      filter,
-    } = payload;
-    httpConfig.params = {
-      _page: page,
-      ...(rowsPerPage > 0 && { _limit: rowsPerPage }),
-      _sort: sortBy,
-      _order: descending ? 'desc' : 'asc',
+    const httpConfig: HttpConfig = {
+      params: createHttpParams<SuperHero>(payload),
     };
-
-    if (filter && filter.length > 0) {
-      httpConfig.params.name_like = filter;
-    }
-
     const { data, count, isError, exec } = useAxios<SuperHero>({
       url: resourceUrl,
       method: 'get',

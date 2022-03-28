@@ -1,6 +1,6 @@
 import { Ref } from 'vue';
 
-import { HttpMethod } from 'src/types';
+import { HttpMethod, Order } from 'src/types';
 
 export interface RequestState<T> {
   isLoading: boolean;
@@ -10,9 +10,17 @@ export interface RequestState<T> {
   count?: number;
 }
 
+export interface ServerPaginationConfig {
+  _page?: number;
+  _limit?: number;
+  _sort?: string;
+  _order?: Order;
+  name_like?: string;
+}
+
 export interface HttpConfig {
   headers?: Record<string, string | number | boolean>;
-  params?: Record<string, unknown>;
+  params?: ServerPaginationConfig;
 }
 
 export interface AxiosConfig<T> {

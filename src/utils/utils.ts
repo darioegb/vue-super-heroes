@@ -2,7 +2,7 @@ import { ref, StorageReference } from 'firebase/storage';
 
 import { firebaseStorage } from 'src/config/firebase';
 import { pictureBasePath } from 'src/constant';
-import { Option } from 'src/interfaces';
+import { Option, RequestGrid, ServerPaginationConfig } from 'src/interfaces';
 
 /**
  * Get enum keys from enum object
@@ -39,3 +39,25 @@ export const fileRef = (fileName: string): StorageReference =>
   ref(firebaseStorage, `${pictureBasePath}/${fileName}`);
 
 export const fileName = (): string => `picture-${Date.now()}`;
+
+export const createHttpParams = <T>(
+  requestGrid: RequestGrid<T>
+): ServerPaginationConfig => {
+  let params: ServerPaginationConfig = {};
+  const {
+    pagination: { descending, page, rowsPerPage, sortBy },
+    filter,
+  } = requestGrid;
+  params = {
+    _page: page,
+    ...(rowsPerPage > 0 && { _limit: rowsPerPage }),
+    _sort: sortBy as string,
+    _order: descending ? 'desc' : 'asc',
+  };
+
+  if (filter && filter.length > 0) {
+    params.name_like = filter;
+  }
+
+  return params;
+};
