@@ -45,3 +45,21 @@
   }
   padding-block-end: 1rem;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
+  }
+
+  .my-sticky-header-table .q-table__top,
+  .q-table__bottom,
+  thead tr:first-child th {
+    background-color: var(--q-dark) !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: whitesmoke;
+  }
+}

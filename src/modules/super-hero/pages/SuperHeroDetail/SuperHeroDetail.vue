@@ -134,9 +134,7 @@ const props = defineProps<{
   view?: boolean;
 }>();
 const $quasar = useQuasar();
-
 const { t: translate } = useI18n({ useScope: 'global' });
-
 const { dropdownTranslate } = useCustomTranslate();
 const { selectedSuperHero, updateSuperHero, createSuperHero } = useSuperHero();
 const genres = convertEnumToKeyValueArray(GenreEnum);
@@ -166,7 +164,6 @@ const state = reactive<SuperHeroForm>(
     : initialState()
 );
 const { name, genre, specialty, age, height, picture, weight } = toRefs(state);
-
 const rules = computed(() => ({
   name: { required, minLength: minLength(1), maxLength: maxLength(10) },
   genre: { required },
@@ -179,7 +176,6 @@ const rules = computed(() => ({
   height: { minValue: minValue(1) },
   weight: { minValue: minValue(1) },
 }));
-
 const v$ = useVuelidate(rules, state);
 
 const onSubmit = () => {
@@ -210,6 +206,7 @@ const saveOrUpdate = async (downloadURL?: string) => {
       message: translate(`superHeroes.toasts.${actionType}.error`),
       type: 'negative',
     });
+    history.back();
     return;
   }
   $quasar.notify(translate(`superHeroes.toasts.${actionType}.success`));

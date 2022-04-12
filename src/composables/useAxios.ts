@@ -15,9 +15,7 @@ export const useAxios = <T>({
   }
   const fullUrl = `${apiBaseUrl as string}/${url}`;
   const initialState = () => ({
-    isLoading: true,
     isError: false,
-    errorMessage: '',
     data: undefined,
     count: undefined,
   });
@@ -39,9 +37,6 @@ export const useAxios = <T>({
         : undefined;
     } catch (error: unknown) {
       state.isError = true;
-      state.errorMessage = (error as { message: string }).message;
-    } finally {
-      state.isLoading = false;
     }
   };
 

@@ -13,7 +13,7 @@ const actions: ActionTree<SuperHeroState, State> = {
     const httpConfig: HttpConfig = {
       params: createHttpParams<SuperHero>(payload),
     };
-    const { data, count, isError, exec } = useAxios<SuperHero>({
+    const { data, count, isError, exec } = useAxios<SuperHero[]>({
       url: resourceUrl,
       method: 'get',
       config: httpConfig,

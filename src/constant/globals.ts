@@ -9,9 +9,9 @@ export const httpMethodKeys = {
   post: 'create',
   put: 'update',
 };
-export const rowsPerPageConfig = [5, 10, 15, 20, 0];
+export const rowsPerPageConfig = [5, 10, 15, 20, 30, 50, 100, 0];
 export const defaultPageConfig: PageConfig<unknown> = {
-  page: 0,
+  page: 1,
   rowsPerPage: 5,
   rowsNumber: 100,
   sortBy: 'id',
