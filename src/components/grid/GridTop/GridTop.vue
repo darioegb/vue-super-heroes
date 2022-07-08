@@ -1,9 +1,9 @@
 <template>
   <q-input
+    clearable
     outlined
     dense
-    debounce="300"
-    class="full-width"
+    debounce="500"
     v-model="filter"
     :label="translate('globals.grid.filterInput.label')"
     :placeholder="translate('globals.grid.filterInput.placeholder')"
@@ -20,10 +20,12 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const emit = defineEmits<{
-  (event: 'change', value: string): void;
+  (event: 'change', value: unknown): void;
 }>();
 
 const { t: translate } = useI18n({ useScope: 'global' });
 const filter = ref<string>('');
-const handleChange = (value: unknown) => emit('change', String(value));
+const handleChange = (value: unknown) =>
+  (String(value).length > 2 || String(value).length === 0) &&
+  emit('change', value);
 </script>

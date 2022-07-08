@@ -9,8 +9,8 @@ export const useAxiosLoader = (): void => {
     },
     (error: unknown) => {
       Loading.hide();
-      return Promise.reject(error);
-    },
+      throw error;
+    }
   );
 
   axios.interceptors.response.use(
@@ -20,7 +20,9 @@ export const useAxiosLoader = (): void => {
     },
     (error: unknown) => {
       Loading.hide();
-      return Promise.reject(error);
-    },
+      throw error;
+    }
   );
 };
+
+export default useAxiosLoader;

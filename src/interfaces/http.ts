@@ -1,22 +1,24 @@
 import { Ref } from 'vue';
 
-import { HttpMethod } from 'src/types';
+import { HttpMethod, Order } from 'src/types';
 
 export interface RequestState<T> {
-  isLoading: boolean;
   isError: boolean;
-  errorMessage: string;
   data?: T;
   count?: number;
 }
 
-export interface HttpConfig {
-  headers?: Record<string, string | number | boolean>;
-  params?: Record<string, unknown>;
+export interface ServerPaginationConfig {
+  _page?: number;
+  _limit?: number;
+  _sort?: string;
+  _order?: Order;
+  name_like?: string;
 }
 
-export interface HttpStatus {
-  ok: boolean;
+export interface HttpConfig {
+  headers?: Record<string, string | number | boolean>;
+  params?: ServerPaginationConfig;
 }
 
 export interface AxiosConfig<T> {
@@ -28,9 +30,7 @@ export interface AxiosConfig<T> {
 }
 
 export interface AxiosResponse<T> {
-  isLoading: Ref<boolean>;
   isError: Ref<boolean>;
-  errorMessage: Ref<string>;
   data?: Ref<T>;
   count?: Ref<number>;
   exec: () => Promise<void>;

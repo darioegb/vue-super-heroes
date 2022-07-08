@@ -1,5 +1,6 @@
 {
   "superHeroes": {
+    "title": "Superheroes",
     "grid": {
       "columns": {
         "name": "Name",
@@ -19,26 +20,11 @@
         "specialtyPlaceholder": "Ex. Can fly",
         "heightPlaceholder": "Ex. 1.70m",
         "weightPlaceholder": "Ex. 70kg"
-      },
-      "previewCardTitle": "Preview"
-    },
-    "toasts": {
-      "create": {
-        "success": "The superheoe was added successfully",
-        "error": "An error occurred while adding a superhero"
-      },
-      "update": {
-        "success": "The superheoe was updated successfully",
-        "error": "An error occurred while updating a superhero"
-      },
-      "remove": {
-        "success": "The superheoe has been successfully removed",
-        "error": "An error occurred while deleting a superhero"
       }
     }
   },
   "globals": {
-    "title": "Superheroes",
+    "title": "CRUD with quasar",
     "selectDefault": "None",
     "grid": {
       "filterInput": {
@@ -46,6 +32,10 @@
         "placeholder": "Ex. test"
       },
       "noMatchingDataText": "No data matching the filter {value}"
+    },
+    "detail": {
+      "previewCardTitle": "Preview",
+      "fileupload": "File upload"
     },
     "buttons": {
       "confirm": "Confirm",
@@ -69,6 +59,18 @@
       }
     },
     "toasts": {
+      "create": {
+        "success": "The superheoe was added successfully",
+        "error": "An error occurred while adding a {value}"
+      },
+      "update": {
+        "success": "The superheoe was updated successfully",
+        "error": "An error occurred while updating a {value}"
+      },
+      "remove": {
+        "success": "The superheoe has been successfully removed",
+        "error": "An error occurred while deleting a {value}"
+      },
       "imageError": "An error occurred while uploadingImage"
     }
   },
@@ -79,6 +81,7 @@
     "email": "It is not a valid email.",
     "min": "The minimum allowed is {param}.",
     "max": "The maximum allowed is {param}.",
+    "fileSize": "The file is too large",
     "pattern": {
       "numeric": "The valid format is numeric.",
       "alphabet": "The valid format is alphabetical.",

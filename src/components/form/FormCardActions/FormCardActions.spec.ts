@@ -79,7 +79,7 @@ describe('FormCardActions.vue', () => {
     });
 
     it('should emit submit button click event when button is clicked', async () => {
-      const submitButton = buttons[0];
+      const submitButton = buttons[2];
       await submitButton.trigger('click');
       expect(wrapper.emitted('click')).toHaveLength(1);
     });
@@ -92,7 +92,7 @@ describe('FormCardActions.vue', () => {
 
     it('should goBack when click on cancel button', async () => {
       const spy = jest.spyOn(history, 'back');
-      const cancelButton = buttons[2];
+      const cancelButton = buttons[0];
       await cancelButton.trigger('click');
       expect(spy).toBeCalled();
     });

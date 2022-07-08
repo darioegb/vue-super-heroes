@@ -15,9 +15,7 @@ export const useAxios = <T>({
   }
   const fullUrl = `${apiBaseUrl as string}/${url}`;
   const initialState = () => ({
-    isLoading: true,
     isError: false,
-    errorMessage: '',
     data: undefined,
     count: undefined,
   });
@@ -29,23 +27,16 @@ export const useAxios = <T>({
   const exec = async () => {
     Object.assign(state, initialState());
     try {
-      const response = await axios({
-        method,
-        url: fullUrl,
-        headers: config?.headers,
-        params: config?.params,
-        data,
-      });
+      const response = ['post', 'put', 'patch'].includes(method)
+        ? await axios[method](fullUrl, data, config)
+        : await axios[method](fullUrl, config);
       state.data = response.data as UnwrapRef<T>;
       // x-total-change if parameter for json server can be changed
-      state.count = +(response.headers as { 'x-total-count': string })[
-        'x-total-count'
-      ];
+      state.count = response.headers
+        ? +(response.headers as Record<string, string>)['x-total-count']
+        : undefined;
     } catch (error: unknown) {
       state.isError = true;
-      state.errorMessage = (error as { message: string }).message;
-    } finally {
-      state.isLoading = false;
     }
   };
 
@@ -54,3 +45,5 @@ export const useAxios = <T>({
     exec,
   } as AxiosResponse<T>;
 };
+
+export default useAxios;

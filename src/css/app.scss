@@ -1,4 +1,11 @@
 // app global css in SCSS form
+.q-field {
+  &__native,
+  &__append {
+    color: white !important;
+  }
+}
+
 .my-sticky-header-table {
   /* height or max-height is important */
   max-height: 800px;
@@ -27,7 +34,6 @@
 .q-table td.wrap,
 .q-table th.wrap {
   /* don't shorten cell contents */
-  // white-space: normal;
   white-space: break-spaces;
   max-width: 10rem;
 
@@ -38,10 +44,20 @@
   }
 }
 
-.picture {
-  max-height: 22rem;
-  div {
-    max-height: 20rem;
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: black;
   }
-  padding-block-end: 1rem;
+
+  .my-sticky-header-table .q-table__top,
+  .q-table__bottom,
+  thead tr:first-child th {
+    background-color: var(--q-dark) !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: whitesmoke;
+  }
 }

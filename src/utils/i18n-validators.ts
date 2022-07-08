@@ -1,5 +1,6 @@
 import * as validators from '@vuelidate/validators';
 import i18n from 'src/config/i18n';
+import * as customValidators from './validators';
 
 // or import { createI18nMessage } from '@vuelidate/validators'
 const { createI18nMessage } = validators;
@@ -25,3 +26,6 @@ export const maxLength = withI18nMessage(validators.maxLength, {
 export const minValue = withI18nMessage(validators.minValue, {
   withArguments: true,
 });
+
+// Custom
+export const fileSize = withI18nMessage(customValidators.fileSize);

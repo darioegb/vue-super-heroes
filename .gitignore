@@ -34,5 +34,9 @@ yarn-error.log*
 
 # Others
 yarn.lock
+
+# Testing
 coverage
 test
+__snapshots__*
+

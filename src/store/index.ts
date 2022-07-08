@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { store } from 'quasar/wrappers';
 import { InjectionKey } from 'vue';
 import {

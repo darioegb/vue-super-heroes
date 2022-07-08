@@ -17,5 +17,7 @@ describe('GridTop.vue', () => {
     });
     await wrapper.find('input').setValue(filter);
     expect(wrapper.emitted('change')).toHaveLength(1);
+    await wrapper.find('input').setValue('');
+    expect(wrapper.emitted('change')).toHaveLength(2);
   });
 });
