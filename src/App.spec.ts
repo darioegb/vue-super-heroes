@@ -1,10 +1,13 @@
 import { describe, expect, it } from '@jest/globals';
 import { shallowMount } from '@vue/test-utils';
 import { createRouter, createWebHistory } from 'vue-router';
+import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 
 import App from './App.vue';
 import i18n from 'src/config/i18n';
 import routes from './router/routes';
+
+installQuasarPlugin();
 
 describe('App.vue', () => {
   const router = createRouter({
@@ -20,6 +23,6 @@ describe('App.vue', () => {
         plugins: [i18n, router],
       },
     });
-    expect(wrapper.find('h1').text()).toMatch('ABM con quasar');
+    expect(wrapper.find('q-layout-stub ').exists()).toBeTruthy();
   });
 });

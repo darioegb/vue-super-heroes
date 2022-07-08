@@ -43,7 +43,7 @@ describe('super-hero-module', () => {
     const selectedSuperHero = superHeroesState.superHeroes[0];
     store.commit('superHeroes/setSelectedSuperHero', selectedSuperHero);
     expect(store.state.superHeroes.selectedSuperHero).toEqual(
-      selectedSuperHero
+      selectedSuperHero,
     );
   });
 
@@ -79,7 +79,7 @@ describe('super-hero-module', () => {
     const store = createVuexStore();
     const isError = (await store.dispatch(
       'superHeroes/updateSuperHero',
-      updatedSuperHero
+      updatedSuperHero,
     )) as boolean;
     expect(isError).toBeFalsy();
     expect(store.state.superHeroes.superHeroes[0]).toEqual(updatedSuperHero);
@@ -90,11 +90,11 @@ describe('super-hero-module', () => {
     const store = createVuexStore();
     const isError = (await store.dispatch(
       'superHeroes/updateSuperHero',
-      updatedSuperHero
+      updatedSuperHero,
     )) as boolean;
     expect(isError).toBeTruthy();
     expect(store.state.superHeroes.superHeroes[0]).not.toEqual(
-      updatedSuperHero
+      updatedSuperHero,
     );
   });
 
@@ -104,12 +104,12 @@ describe('super-hero-module', () => {
     const deletedSuperHero = store.state.superHeroes.superHeroes[0];
     const isError = (await store.dispatch(
       'superHeroes/deleteSuperHero',
-      deletedSuperHero.id
+      deletedSuperHero.id,
     )) as boolean;
     expect(isError).toBeFalsy();
     expect(store.state.superHeroes.superHeroes.length).toBe(1);
     expect(store.state.superHeroes.superHeroes[0]).not.toEqual(
-      deletedSuperHero
+      deletedSuperHero,
     );
   });
 
@@ -119,7 +119,7 @@ describe('super-hero-module', () => {
     const deletedSuperHero = store.state.superHeroes.superHeroes[0];
     const isError = (await store.dispatch(
       'superHeroes/deleteSuperHero',
-      deletedSuperHero.id
+      deletedSuperHero.id,
     )) as boolean;
     expect(isError).toBeTruthy();
     expect(store.state.superHeroes.superHeroes.length).toBe(2);
@@ -127,11 +127,11 @@ describe('super-hero-module', () => {
   });
 
   it('should addSuperHero with createSuperHero action', async () => {
-    mockFn.mockReturnValueOnce({});
+    mockFn.mockReturnValueOnce({ data: newSuperHero });
     const store = createVuexStore();
     const isError = (await store.dispatch(
       'superHeroes/createSuperHero',
-      newSuperHero
+      newSuperHero,
     )) as boolean;
     expect(isError).toBeFalsy();
     expect(store.state.superHeroes.superHeroes[2]).toEqual(newSuperHero);
@@ -142,7 +142,7 @@ describe('super-hero-module', () => {
     const store = createVuexStore();
     const isError = (await store.dispatch(
       'superHeroes/createSuperHero',
-      newSuperHero
+      newSuperHero,
     )) as boolean;
     expect(isError).toBeTruthy();
     expect(store.state.superHeroes.superHeroes[2]).not.toEqual(newSuperHero);

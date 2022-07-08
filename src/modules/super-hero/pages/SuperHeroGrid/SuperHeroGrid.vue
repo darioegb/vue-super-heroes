@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, ComputedRef, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
@@ -63,7 +63,7 @@ const {
 const rows = ref<SuperHero[]>([]);
 const filter = ref<string>('');
 const pagination = ref<PageConfig<SuperHero>>(defaultPageConfig);
-const columns: Column<SuperHero>[] = [
+const columns: ComputedRef<Column<SuperHero>[]> = computed(() => [
   {
     name: 'name',
     align: 'left',
@@ -114,7 +114,7 @@ const columns: Column<SuperHero>[] = [
     sortable: false,
     isImg: true,
   },
-];
+]);
 
 onMounted(async () => {
   await onRequest({ pagination: pagination.value, filter: undefined });
@@ -156,15 +156,18 @@ const handlerAddOrEditOrView = (item?: unknown, view?: boolean) => {
 };
 
 const handlerDelete = async (id: string) => {
+  const toastParam = translate('superHeroes.detail.title').toLowerCase();
   const isError = await deleteSuperHero(id);
   if (isError) {
     $quasar.notify({
-      message: translate('superHeroes.toasts.remove.error'),
+      message: translate('globals.toasts.remove.error', { value: toastParam }),
       type: 'negative',
     });
     return;
   }
-  $quasar.notify(translate('superHeroes.toasts.remove.success'));
+  $quasar.notify(
+    translate('globals.toasts.remove.success', { value: toastParam }),
+  );
   await onRequest({ pagination: pagination.value, filter: filter.value });
 };
 </script>

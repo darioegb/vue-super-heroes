@@ -5,3 +5,4 @@ export { default as EmptyGrid } from './grid/EmptyGrid/EmptyGrid.vue';
 export { default as FormCardActions } from './form/FormCardActions/FormCardActions.vue';
 export { default as FormCard } from './form/FormCard/FormCard.vue';
 export { default as FormImgUpload } from './form/FormImgUpload/FormImgUpload.vue';
+export { default as Navbar } from './Navbar/Navbar.vue';

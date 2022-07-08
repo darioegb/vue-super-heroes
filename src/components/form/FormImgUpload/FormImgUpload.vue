@@ -5,8 +5,10 @@
         :model-value="picture"
         :readonly="view"
         accept="image/*"
-        :label="translate('superHeroes.grid.columns.picture')"
+        :label="translate('globals.detail.fileupload')"
         outlined
+        :error="validation.$error"
+        :error-message="validation.$errors[0]?.$message.toString()"
         @update:model-value="handleChange"
       >
         <template #file>
@@ -24,7 +26,7 @@
       <q-card>
         <q-card-section>
           <p class="text-h6 text-center">
-            {{ translate('superHeroes.detail.previewCardTitle') }}
+            {{ translate('globals.detail.previewCardTitle') }}
           </p>
         </q-card-section>
         <q-card class="picture">
@@ -47,9 +49,10 @@ import {
   StorageReference,
 } from 'firebase/storage';
 import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
 import { fileToBase64String, fileRef, fileName } from 'src/utils';
-import { useI18n } from 'vue-i18n';
+import { Validation } from 'src/interfaces';
 
 const $quasar = useQuasar();
 
@@ -58,6 +61,7 @@ const props = defineProps<{
   seletedItemPicture?: string;
   picture?: File;
   view?: boolean;
+  validation: Validation;
 }>();
 
 const emit = defineEmits<{
@@ -71,12 +75,13 @@ const uploadProgress = ref<number>(0);
 
 const unwatch = watch(
   () => props.isUploading,
-  (value) => value && uploadFile()
+  (value) => value && uploadFile(),
 );
 
 const handleChange = async (file: File) => {
   previewPicture.value = await fileToBase64String(file);
   emit('update:picture', file);
+  props.validation.$touch();
 };
 
 const uploadFile = () => {
@@ -94,7 +99,7 @@ const uploadFile = () => {
         type: 'negative',
       });
     },
-    () => void handleFileUpload(uploadTask.snapshot.ref)
+    () => void handleFileUpload(uploadTask.snapshot.ref),
   );
 };
 
@@ -107,5 +112,12 @@ const handleFileUpload = async (ref: StorageReference) => {
 <style lang="scss" scoped>
 .col {
   margin: 0.5rem !important;
+}
+.picture {
+  max-height: 22rem;
+  div {
+    max-height: 20rem;
+  }
+  padding-block-end: 1rem;
 }
 </style>

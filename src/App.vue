@@ -1,26 +1,20 @@
 <template>
-  <section class="app">
-    <h1>{{ translate('globals.title') }}</h1>
-    <router-view />
-  </section>
+  <q-layout>
+    <q-header elevated>
+      <navbar />
+    </q-header>
+    <q-page-container>
+      <q-page>
+        <router-view />
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script setup lang="ts">
 import './config/firebase';
-import { useI18n } from 'vue-i18n';
 import { useAxiosLoader } from './composables';
+import { Navbar } from 'src/components';
 
 useAxiosLoader();
-const { t: translate } = useI18n({ useScope: 'global' });
 </script>
-
-<style lang="scss" scoped>
-.app {
-  padding: 1%;
-  h1 {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-    padding: 0 16px;
-  }
-}
-</style>

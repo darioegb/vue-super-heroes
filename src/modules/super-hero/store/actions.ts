@@ -38,7 +38,7 @@ const actions: ActionTree<SuperHeroState, State> = {
   },
 
   async createSuperHero({ commit }, payload: SuperHero): Promise<boolean> {
-    const { exec, isError } = useAxios<SuperHero>({
+    const { data, exec, isError } = useAxios<SuperHero>({
       url: resourceUrl,
       method: 'post',
       data: payload,
@@ -46,7 +46,7 @@ const actions: ActionTree<SuperHeroState, State> = {
     await exec();
     if (isError.value) return isError.value;
 
-    commit('addSuperHero', payload);
+    commit('addSuperHero', data?.value);
     return isError.value;
   },
 
