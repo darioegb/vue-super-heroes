@@ -8,8 +8,10 @@ export const useCustomTranslate = (): CustomTranslateResponse => {
     path: string,
     value: number,
     object: T
-  ): string => translate(`${path}.${object[value]?.toLowerCase()}`);
+  ): string => translate(`${path}.${object[value].toLowerCase()}`);
   return {
     dropdownTranslate,
   };
 };
+
+export default useCustomTranslate;

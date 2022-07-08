@@ -23,18 +23,21 @@
         flat
         round
         icon="visibility"
+        color="grey"
         @click="onViewItemClicked(tableProps.row)"
       />
       <q-btn
         flat
         round
         icon="edit"
+        color="primary"
         @click="onEditItemClicked(tableProps.row)"
       />
       <q-btn
         flat
         round
         icon="delete"
+        color="negative"
         @click="onDeleteItemClicked(tableProps.row)"
       />
     </q-td>

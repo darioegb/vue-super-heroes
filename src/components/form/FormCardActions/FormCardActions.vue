@@ -1,9 +1,10 @@
 <template>
   <q-card-actions>
     <q-btn
-      :label="translate('globals.buttons.save')"
-      type="submit"
-      color="primary"
+      :label="translate('globals.buttons.cancel')"
+      type="button"
+      color="secondary"
+      @click="goBack"
     />
     <q-btn
       :label="translate('globals.buttons.reset')"
@@ -12,10 +13,9 @@
       :disable="isEditOrView"
     />
     <q-btn
-      :label="translate('globals.buttons.cancel')"
-      type="button"
-      color="red"
-      @click="goBack"
+      :label="translate('globals.buttons.save')"
+      type="submit"
+      color="primary"
     />
   </q-card-actions>
 </template>

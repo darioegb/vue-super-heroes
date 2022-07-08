@@ -3,99 +3,63 @@ import { ActionTree } from 'vuex';
 import { State } from 'src/store';
 import { SuperHero, SuperHeroState } from 'src/modules/super-hero/interfaces';
 import { useAxios } from 'src/composables';
-import { HttpConfig, HttpStatus, RequestGrid } from 'src/interfaces';
+import { HttpConfig, RequestGrid } from 'src/interfaces';
+import { createHttpParams } from 'src/utils';
 
 const resourceUrl = 'superHeroes';
 
 const actions: ActionTree<SuperHeroState, State> = {
-  async getSuperHeroes({ commit }) {
-    const { data, isError, exec } = useAxios<SuperHero>({
-      url: resourceUrl,
-      method: 'get',
-    });
-    await exec();
-
-    if (!data || isError.value) {
-      commit('setSuperHeroes', []);
-      return;
-    }
-
-    commit('setSuperHeroes', data.value);
-  },
-
   async getSuperHeroesPage({ commit }, payload: RequestGrid<SuperHero>) {
-    const httpConfig: HttpConfig = { params: {} };
-    const {
-      pagination: { descending, page, rowsPerPage, sortBy },
-      filter,
-    } = payload;
-    httpConfig.params = {
-      _page: page,
-      _limit: rowsPerPage,
-      _sort: sortBy,
-      _order: descending ? 'desc' : 'asc',
+    const httpConfig: HttpConfig = {
+      params: createHttpParams<SuperHero>(payload),
     };
-
-    if (filter && filter.length > 0) {
-      httpConfig.params.name_like = filter;
-    }
-
-    const { data, count, isError, exec } = useAxios<SuperHero>({
+    const { data, count, isError, exec } = useAxios<SuperHero[]>({
       url: resourceUrl,
       method: 'get',
       config: httpConfig,
     });
     await exec();
 
-    if (!data || isError.value) {
-      commit('setSuperHeroes', []);
-      return;
-    }
-
-    commit('setSuperHeroes', data.value);
+    commit('setSuperHeroes', !data || isError.value ? [] : data.value);
     return count?.value;
   },
 
-  async updateSuperHero({ commit }, payload: SuperHero) {
+  async updateSuperHero({ commit }, payload: SuperHero): Promise<boolean> {
     const { data, exec, isError } = useAxios<SuperHero>({
       url: `${resourceUrl}/${payload.id as string}`,
       method: 'put',
       data: payload,
     });
     await exec();
-    if (isError.value) {
-      return { ok: false };
-    }
+    if (isError.value) return isError.value;
 
     commit('updateSuperHero', { ...(data && data.value) });
-    return { ok: true };
+    return isError.value;
   },
 
-  async createSuperHero({ commit }, payload: SuperHero) {
-    const { exec, isError } = useAxios<SuperHero>({
+  async createSuperHero({ commit }, payload: SuperHero): Promise<boolean> {
+    const { data, exec, isError } = useAxios<SuperHero>({
       url: resourceUrl,
       method: 'post',
       data: payload,
     });
     await exec();
-    if (isError.value) {
-      return { ok: false };
-    }
-    commit('addSuperHero', payload);
-    return { ok: true };
+    if (isError.value) return isError.value;
+
+    commit('addSuperHero', data?.value);
+    return isError.value;
   },
 
-  async deleteSuperHero({ commit }, payload: string): Promise<HttpStatus> {
+  async deleteSuperHero({ commit }, payload: string): Promise<boolean> {
     const { exec, isError } = useAxios<SuperHero>({
       url: `${resourceUrl}/${payload}`,
       method: 'delete',
     });
     await exec();
-    if (isError.value) {
-      return { ok: false };
-    }
+    if (isError.value) return isError.value;
+
     commit('deleteSuperHero', payload);
-    return { ok: true };
+    return isError.value;
   },
 };
 

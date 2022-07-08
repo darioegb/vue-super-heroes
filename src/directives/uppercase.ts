@@ -4,8 +4,7 @@ export const uppercase = {
     updated: (el: HTMLElement): void => {
       const input: HTMLInputElement | HTMLTextAreaElement | null =
         el.querySelector('input, textarea');
-      if (!input) return;
-      input.value = input?.value.toUpperCase();
+      if (input) input.value = input.value.toUpperCase();
     },
   },
 };

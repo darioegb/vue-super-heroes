@@ -87,6 +87,7 @@ module.exports = configure(function (ctx) {
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
     framework: {
       config: {
+        dark: 'auto',
         notify: {
           position: 'top-right',
           type: 'positive',

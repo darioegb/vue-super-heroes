@@ -14,7 +14,7 @@ const mutation: MutationTree<SuperHeroState> = {
     state.superHeroes = [...state.superHeroes, payload];
   },
   updateSuperHero(state, payload: SuperHero) {
-    state.superHeroes.forEach(({ ...superHero }) =>
+    state.superHeroes = state.superHeroes.map(({ ...superHero }) =>
       superHero.id === payload.id ? payload : superHero
     );
   },

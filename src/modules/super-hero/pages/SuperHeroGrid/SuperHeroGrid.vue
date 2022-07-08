@@ -2,6 +2,7 @@
   <div class="q-pa-md">
     <q-table
       class="my-sticky-header-table"
+      :title="translate('superHeroes.title')"
       :rows="rows"
       :rows-per-page-options="rowsPerPageConfig"
       :columns="columns"
@@ -24,7 +25,7 @@
           @deleteitem-click="handlerDelete"
         />
       </template>
-      <template #top>
+      <template #top-right>
         <grid-top @change="handleFilterChange" />
       </template>
       <template #no-data>
@@ -35,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { computed, ComputedRef, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
@@ -56,19 +57,18 @@ const { dropdownTranslate } = useCustomTranslate();
 const {
   superHeroes,
   getSuperHeroesPage,
-  getSuperHeroes,
   deleteSuperHero,
   setSelectedSuperHero,
 } = useSuperHero();
 const rows = ref<SuperHero[]>([]);
 const filter = ref<string>('');
 const pagination = ref<PageConfig<SuperHero>>(defaultPageConfig);
-const columns: Column<SuperHero>[] = [
+const columns: ComputedRef<Column<SuperHero>[]> = computed(() => [
   {
     name: 'name',
     align: 'left',
     label: translate('superHeroes.grid.columns.name'),
-    field: (row: SuperHero) => row.name,
+    field: 'name',
     sortable: true,
   },
   {
@@ -114,31 +114,31 @@ const columns: Column<SuperHero>[] = [
     sortable: false,
     isImg: true,
   },
-];
+]);
 
 onMounted(async () => {
   await onRequest({ pagination: pagination.value, filter: undefined });
 });
 
-const handleFilterChange = (value: string) => (filter.value = value);
+const handleFilterChange = (value: unknown) => (filter.value = value as string);
 
 const onRequest = async (props: unknown) => {
   const { pagination: newPagination, filter: newFilter } =
     props as RequestGrid<SuperHero>;
   const { page, rowsPerPage, sortBy, descending } = newPagination;
-  const count =
-    rowsPerPage !== 0
-      ? await getSuperHeroesPage({
-          pagination: newPagination,
-          filter: newFilter,
-        })
-      : await getSuperHeroes();
+  const count = await getSuperHeroesPage({
+    pagination: newPagination,
+    filter: newFilter,
+  });
+
+  if (!count) return;
+
   rows.value = superHeroes.value;
   pagination.value.page = page;
   pagination.value.rowsPerPage = rowsPerPage;
   pagination.value.sortBy = sortBy;
   pagination.value.descending = descending;
-  pagination.value.rowsNumber = count || undefined;
+  pagination.value.rowsNumber = count;
 };
 
 const handlerAddOrEditOrView = (item?: unknown, view?: boolean) => {
@@ -156,15 +156,18 @@ const handlerAddOrEditOrView = (item?: unknown, view?: boolean) => {
 };
 
 const handlerDelete = async (id: string) => {
-  const status = await deleteSuperHero(id);
-  if (!status.ok) {
+  const toastParam = translate('superHeroes.detail.title').toLowerCase();
+  const isError = await deleteSuperHero(id);
+  if (isError) {
     $quasar.notify({
-      message: translate('superHeroes.toasts.remove.error'),
+      message: translate('globals.toasts.remove.error', { value: toastParam }),
       type: 'negative',
     });
     return;
   }
-  $quasar.notify(translate('superHeroes.toasts.remove.success'));
+  $quasar.notify(
+    translate('globals.toasts.remove.success', { value: toastParam }),
+  );
   await onRequest({ pagination: pagination.value, filter: filter.value });
 };
 </script>
