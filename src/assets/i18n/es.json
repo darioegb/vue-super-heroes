@@ -13,7 +13,7 @@
       }
     },
     "detail": {
-      "title": "SuperHeroe",
+      "title": "Superhéroe",
       "form": {
         "agePlaceholder": "Ej. 50",
         "namePlaceholder": "Ej. Superman",
@@ -60,16 +60,16 @@
     },
     "toasts": {
       "create": {
-        "success": "El superheoe se agregó con éxito",
-        "error": "Ocurrió un error al agregar un superheroe"
+        "success": "{value} se agregó con éxito",
+        "error": "Ocurrió un error al agregar un {value}"
       },
       "update": {
-        "success": "El superheoe fue actualizado con éxito",
-        "error": "Ocurrió un error al actualizar un superheroe"
+        "success": "{value} fue actualizado con éxito",
+        "error": "Ocurrió un error al actualizar un {value}"
       },
       "remove": {
-        "success": "El superheoe ha sido eliminado exitosamente",
-        "error": "Ocurrió un error al eliminar un superheroe"
+        "success": "El {value} ha sido eliminado exitosamente",
+        "error": "Ocurrió un error al eliminar un {value}"
       },
       "imageError": "Ocurrió un error al subir la imagen"
     }

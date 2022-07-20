@@ -23,7 +23,6 @@
         flat
         round
         icon="visibility"
-        color="grey"
         @click="onViewItemClicked(tableProps.row)"
       />
       <q-btn
@@ -64,7 +63,7 @@ const { t: translate } = useI18n({ useScope: 'global' });
 
 const getRowValue = (
   { format, name }: Column<unknown>,
-  row: Record<string, unknown>
+  row: Record<string, unknown>,
 ): unknown => (format ? format(row[name]) : row[name] || '-');
 
 const onViewItemClicked = (row: Record<string, unknown>) =>

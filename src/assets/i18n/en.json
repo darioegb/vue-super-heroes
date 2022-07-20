@@ -13,7 +13,7 @@
       }
     },
     "detail": {
-      "title": "SuperHeroe",
+      "title": "Super Hero",
       "form": {
         "agePlaceholder": "Ex. 50",
         "namePlaceholder": "Ex. Superman",
@@ -60,18 +60,18 @@
     },
     "toasts": {
       "create": {
-        "success": "The superheoe was added successfully",
+        "success": "{value} was added successfully",
         "error": "An error occurred while adding a {value}"
       },
       "update": {
-        "success": "The superheoe was updated successfully",
+        "success": "{value} was updated successfully",
         "error": "An error occurred while updating a {value}"
       },
       "remove": {
-        "success": "The superheoe has been successfully removed",
+        "success": "{value} has been successfully removed",
         "error": "An error occurred while deleting a {value}"
       },
-      "imageError": "An error occurred while uploadingImage"
+      "imageError": "An error occurred while uploading image"
     }
   },
   "validations": {

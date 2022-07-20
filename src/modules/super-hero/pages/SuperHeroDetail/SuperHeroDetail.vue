@@ -125,7 +125,11 @@ import {
   convertEnumToKeyValueArray,
   fileSize,
 } from 'src/utils';
-import { GenreEnum, httpMethodKeys } from 'src/constant';
+import {
+  defaultFormControlSizes,
+  GenreEnum,
+  httpMethodKeys,
+} from 'src/constant';
 import { useCustomTranslate } from 'src/composables';
 import { SuperHero, SuperHeroForm } from 'src/modules/super-hero/interfaces';
 import { useSuperHero } from 'src/modules/super-hero/composables';
@@ -143,6 +147,7 @@ const { selectedSuperHero, updateSuperHero, createSuperHero } = useSuperHero();
 const genres = convertEnumToKeyValueArray(GenreEnum);
 const selectedItem = selectedSuperHero.value;
 const isUploading = ref<boolean>(false);
+const { text, number, textarea } = defaultFormControlSizes;
 
 const initialState = () => ({
   name: '',
@@ -170,18 +175,18 @@ const { name, genre, specialty, age, height, picture, weight } = toRefs(state);
 const rules = computed(() => ({
   name: {
     required,
-    minLength: minLength(1),
-    maxLength: maxLength(10),
+    minLength: minLength(text.min),
+    maxLength: maxLength(text.max),
   },
   genre: { required },
   specialty: {
     required,
-    minLength: minLength(10),
-    maxLength: maxLength(250),
+    minLength: minLength(textarea.min),
+    maxLength: maxLength(textarea.max),
   },
-  age: { minValue: minValue(1) },
-  height: { minValue: minValue(1) },
-  weight: { minValue: minValue(1) },
+  age: { minValue: minValue(number.min) },
+  height: { minValue: minValue(number.min) },
+  weight: { minValue: minValue(number.min) },
   picture: {
     fileSize,
   },
