@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import { defaultPageConfig } from 'src/constant';
+import { defaultPageConfig } from 'src/constants';
 import { SuperHeroState } from 'src/modules/super-hero/interfaces';
 
 // must define this above the `useSuperHero` import, otherwise the ReferenceError is raised.
@@ -56,7 +56,7 @@ describe('useSuperHero', () => {
     setSelectedSuperHero(superHero);
     expect(mockFn).toHaveBeenCalledWith(
       'superHeroes/setSelectedSuperHero',
-      superHero
+      superHero,
     );
   });
 
@@ -71,7 +71,7 @@ describe('useSuperHero', () => {
     await getSuperHeroesPage(requestGrid);
     expect(mockFn).toHaveBeenCalledWith(
       'superHeroes/getSuperHeroesPage',
-      requestGrid
+      requestGrid,
     );
   });
 
@@ -81,7 +81,7 @@ describe('useSuperHero', () => {
     await updateSuperHero(updatedSuperHero);
     expect(mockFn).toHaveBeenCalledWith(
       'superHeroes/updateSuperHero',
-      updatedSuperHero
+      updatedSuperHero,
     );
   });
 
@@ -100,7 +100,7 @@ describe('useSuperHero', () => {
     await createSuperHero(newSuperHero);
     expect(mockFn).toHaveBeenCalledWith(
       'superHeroes/createSuperHero',
-      newSuperHero
+      newSuperHero,
     );
   });
 });

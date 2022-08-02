@@ -1,6 +1,6 @@
 import { ComputedRef } from 'vue';
 
-import { GenreEnum } from 'src/constant';
+import { GenreEnum } from 'src/constants';
 import { Option, RequestGrid } from 'src/interfaces';
 import { GenericOrUndefined } from 'src/types';
 
@@ -32,7 +32,7 @@ export interface SuperHeroResponse {
   selectedSuperHero: ComputedRef<GenericOrUndefined<SuperHero>>;
   setSelectedSuperHero: (superHero: SuperHero) => void;
   getSuperHeroesPage: (
-    requestGrid: RequestGrid<SuperHero>
+    requestGrid: RequestGrid<SuperHero>,
   ) => Promise<number | undefined>;
   updateSuperHero: (superHero: SuperHero) => Promise<boolean>;
   createSuperHero: (superHero: SuperHero) => Promise<boolean>;

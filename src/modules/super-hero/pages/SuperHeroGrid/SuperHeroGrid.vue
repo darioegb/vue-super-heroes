@@ -41,7 +41,7 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import { defaultPageConfig, GenreEnum, rowsPerPageConfig } from 'src/constant';
+import { defaultPageConfig, GenreEnum, rowsPerPageConfig } from 'src/constants';
 import { Column, PageConfig, RequestGrid } from 'src/interfaces';
 import { useCustomTranslate } from 'src/composables';
 import { SuperHero } from 'src/modules/super-hero/interfaces';

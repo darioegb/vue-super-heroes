@@ -129,7 +129,7 @@ import {
   defaultFormControlSizes,
   GenreEnum,
   httpMethodKeys,
-} from 'src/constant';
+} from 'src/constants';
 import { useCustomTranslate } from 'src/composables';
 import { SuperHero, SuperHeroForm } from 'src/modules/super-hero/interfaces';
 import { useSuperHero } from 'src/modules/super-hero/composables';

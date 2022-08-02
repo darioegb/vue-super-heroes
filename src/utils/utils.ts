@@ -1,7 +1,7 @@
 import { ref, StorageReference } from 'firebase/storage';
 
 import { firebaseStorage } from 'src/config/firebase';
-import { pictureBasePath } from 'src/constant';
+import { pictureBasePath } from 'src/constants';
 import { Option, RequestGrid, ServerPaginationConfig } from 'src/interfaces';
 
 /**
@@ -19,7 +19,7 @@ export const getEnumKeys = <T>(type: T): string[] =>
 export const convertEnumToKeyValueArray = <T>(type: T): Option[] =>
   getEnumKeys(type).map(
     (key) =>
-      ({ key, value: type[key as keyof typeof type] as unknown } as Option)
+      ({ key, value: type[key as keyof typeof type] as unknown } as Option),
   );
 
 /**
@@ -41,7 +41,7 @@ export const fileRef = (fileName: string): StorageReference =>
 export const fileName = (): string => `picture-${Date.now()}`;
 
 export const createHttpParams = <T>(
-  requestGrid: RequestGrid<T>
+  requestGrid: RequestGrid<T>,
 ): ServerPaginationConfig => {
   let params: ServerPaginationConfig = {};
   const {
