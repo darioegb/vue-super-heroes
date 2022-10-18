@@ -3,7 +3,6 @@ import { mount } from '@vue/test-utils';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
 
 import FormCard from './FormCard.vue';
-import i18n from 'src/config/i18n';
 
 installQuasarPlugin();
 
@@ -16,7 +15,6 @@ describe('FormCard.vue', () => {
         stubs: {
           FormCardActions: true,
         },
-        plugins: [i18n],
       },
       props: { title },
     });
@@ -29,7 +27,6 @@ describe('FormCard.vue', () => {
         stubs: {
           FormCardActions: true,
         },
-        plugins: [i18n],
       },
       props: { title },
       slots: {

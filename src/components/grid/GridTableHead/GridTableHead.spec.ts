@@ -1,9 +1,10 @@
 import { Column } from 'src/interfaces';
 import { describe, expect, it } from '@jest/globals';
 import { installQuasarPlugin } from '@quasar/quasar-app-extension-testing-unit-jest';
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 
 import GridTableHead from './GridTableHead.vue';
+import { ComponentPublicInstance } from 'vue';
 
 installQuasarPlugin();
 
@@ -47,8 +48,12 @@ const StubParentComponent = {
 
 describe('GridTableHead.vue', () => {
   it('should trigger additemClick event when button is clicked', async () => {
-    const wrapper = mount(StubParentComponent);
-    const child = wrapper.findComponent(GridTableHead as never);
+    const wrapper = mount(
+      StubParentComponent,
+    ) as VueWrapper<ComponentPublicInstance>;
+    const child: VueWrapper<ComponentPublicInstance> = wrapper.findComponent(
+      GridTableHead as never,
+    ) as never;
     const button = wrapper.find('button');
     await button.trigger('click');
     expect(child.emitted('additemClick')).toHaveLength(1);

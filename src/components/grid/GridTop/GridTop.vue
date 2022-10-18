@@ -7,7 +7,7 @@
     v-model="filter"
     :label="translate('globals.grid.filterInput.label')"
     :placeholder="translate('globals.grid.filterInput.placeholder')"
-    @update:model-value="handleChange"
+    @update:model-value="onChange"
   >
     <template #append>
       <q-icon name="search" />
@@ -25,7 +25,7 @@ const emit = defineEmits<{
 
 const { t: translate } = useI18n({ useScope: 'global' });
 const filter = ref<string>('');
-const handleChange = (value: unknown) =>
+const onChange = (value: unknown) =>
   (String(value).length > 2 || String(value).length === 0) &&
   emit('change', value);
 </script>

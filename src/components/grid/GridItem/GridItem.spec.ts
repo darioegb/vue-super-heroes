@@ -80,7 +80,7 @@ describe('GridItem.vue', () => {
         plugins: [i18n],
       },
     });
-    child = wrapper.findComponent(GridItem as never);
+    child = wrapper.findComponent(GridItem as never) as never;
     buttons = wrapper.findAll('button');
   });
 
@@ -100,7 +100,7 @@ describe('GridItem.vue', () => {
     vm.$q.dialog({}).onOk = jest.fn(() =>
       (
         vm as unknown as { onConfirmDeleteItem: (id: string) => void }
-      ).onConfirmDeleteItem('1')
+      ).onConfirmDeleteItem('1'),
     ) as never;
     await buttons[2].trigger('click');
     expect(vm.$q.dialog({}).onOk).toHaveBeenCalled();

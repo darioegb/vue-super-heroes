@@ -7,8 +7,9 @@ export const useCustomTranslate = (): CustomTranslateResponse => {
   const dropdownTranslate = <T extends Record<number, string>>(
     path: string,
     value: number,
-    object: T
+    object: T,
   ): string => translate(`${path}.${object[value].toLowerCase()}`);
+
   return {
     dropdownTranslate,
   };

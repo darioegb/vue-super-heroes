@@ -33,7 +33,7 @@
           <q-img
             spinner-color="blue"
             fit="scale-down"
-            :src="previewPicture || require('src/assets/img/no-image.png')"
+            :src="previewPicture || require('assets/img/no-image.png')"
           />
         </q-card>
       </q-card>
@@ -58,10 +58,10 @@ const $quasar = useQuasar();
 
 const props = defineProps<{
   isUploading: boolean;
+  validation: Validation;
   seletedItemPicture?: string;
   picture?: File;
   view?: boolean;
-  validation: Validation;
 }>();
 
 const emit = defineEmits<{

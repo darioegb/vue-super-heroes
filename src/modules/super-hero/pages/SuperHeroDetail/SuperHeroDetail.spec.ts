@@ -133,7 +133,7 @@ describe('SuperHeroDetail.vue', () => {
     const spy = jest.spyOn(
       (wrapper as unknown as Record<string, { $q: { notify: () => unknown } }>)
         .vm.$q,
-      'notify'
+      'notify',
     );
     const submitButton = wrapper.find('button[type="submit"]');
     const input = wrapper.findAll('input')[0];
@@ -144,7 +144,7 @@ describe('SuperHeroDetail.vue', () => {
     await select.setValue({ key: 'Male', value: 1 });
     await submitButton.trigger('submit.prevent');
     await flushPromises();
-    expect(spy).toHaveBeenCalledWith('El superheoe se agregó con éxito');
+    expect(spy).toHaveBeenCalledWith('super hero was added successfully');
   });
 
   it("should'n submit form when click on submit button and error ocurred", async () => {
@@ -161,7 +161,7 @@ describe('SuperHeroDetail.vue', () => {
     const spy = jest.spyOn(
       (wrapper as unknown as Record<string, { $q: { notify: () => unknown } }>)
         .vm.$q,
-      'notify'
+      'notify',
     );
     const submitButton = wrapper.find('button[type="submit"]');
     const input = wrapper.findAll('input')[0];
@@ -173,7 +173,7 @@ describe('SuperHeroDetail.vue', () => {
     await submitButton.trigger('submit.prevent');
     await flushPromises();
     expect(spy).toHaveBeenCalledWith({
-      message: 'Ocurrió un error al agregar un superheroe',
+      message: 'An error occurred while adding a super hero',
       type: 'negative',
     });
   });
@@ -192,7 +192,7 @@ describe('SuperHeroDetail.vue', () => {
     const spy = jest.spyOn(
       (wrapper as unknown as Record<string, { $q: { notify: () => unknown } }>)
         .vm.$q,
-      'notify'
+      'notify',
     );
     const submitButton = wrapper.find('button[type="submit"]');
     await submitButton.trigger('submit.prevent');
@@ -217,13 +217,13 @@ describe('SuperHeroDetail.vue', () => {
     const spy = jest.spyOn(
       (wrapper as unknown as Record<string, { $q: { notify: () => unknown } }>)
         .vm.$q,
-      'notify'
+      'notify',
     );
     const submitButton = wrapper.find('button[type="submit"]');
     const input = wrapper.findAll('input')[0];
     await input.setValue('TEST');
     await submitButton.trigger('submit.prevent');
     await flushPromises();
-    expect(spy).toHaveBeenCalledWith('El superheoe fue actualizado con éxito');
+    expect(spy).toHaveBeenCalledWith('super hero was updated successfully');
   });
 });

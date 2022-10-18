@@ -37,7 +37,7 @@ describe('FormImgUpload.vue', () => {
   const validation = {
     $error: false,
     $errors: [],
-    touch: () => {},
+    $touch: () => {},
   };
 
   beforeEach(() => {

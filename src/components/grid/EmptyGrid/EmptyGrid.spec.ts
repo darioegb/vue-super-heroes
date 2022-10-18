@@ -16,8 +16,6 @@ describe('EmptyGrid.vue', () => {
       },
       props: { filter },
     });
-    expect(wrapper.text()).toMatch(
-      `No hay datos que coincidan con el filtro ${filter}`
-    );
+    expect(wrapper.text()).toMatch(`No data matching the filter ${filter}`);
   });
 });

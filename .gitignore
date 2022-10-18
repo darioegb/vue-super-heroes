@@ -32,9 +32,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-# Others
-yarn.lock
-
 # Testing
 coverage
 test

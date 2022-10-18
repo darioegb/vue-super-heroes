@@ -28,6 +28,6 @@ describe('useCustomTranslate', () => {
         plugins: [i18n],
       },
     });
-    expect(wrapper.html()).toMatch('Masculino');
+    expect(wrapper.html()).toMatch('Male');
   });
 });

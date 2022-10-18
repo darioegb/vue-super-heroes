@@ -13,9 +13,7 @@
         v-else
         spinner-color="blue"
         fit="scale-down"
-        :src="
-          tableProps.row[col.name] || require('src/assets/img/no-image.png')
-        "
+        :src="tableProps.row[col.name] || require('assets/img/no-image.png')"
       />
     </q-td>
     <q-td class="text-right">

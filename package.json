@@ -16,7 +16,9 @@
     "test:unit:watch": "jest --watch",
     "test:unit:watchAll": "jest --watchAll",
     "serve:test:coverage": "quasar serve test/jest/coverage/lcov-report/ --port 8788",
-    "concurrently:dev:jest": "concurrently \"quasar dev\" \"jest --watch\""
+    "concurrently:dev:jest": "concurrently \"quasar dev\" \"jest --watch\"",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -32,19 +34,32 @@
     "vuex": "^4.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.19.3",
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app": "^3.0.0",
     "@quasar/quasar-app-extension-testing": "^2.0.2",
     "@quasar/quasar-app-extension-testing-unit-jest": "^3.0.0-alpha.8",
+    "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-interactions": "^6.5.12",
+    "@storybook/addon-links": "^6.5.12",
+    "@storybook/builder-webpack5": "^6.5.12",
+    "@storybook/manager-webpack5": "^6.5.12",
+    "@storybook/testing-library": "^0.0.13",
+    "@storybook/vue3": "^6.5.12",
     "@types/node": "^12.20.21",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
+    "babel-loader": "^8.2.5",
     "dotenv": "^16.0.0",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-storybook": "^0.6.6",
     "eslint-plugin-vue": "^7.0.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "storybook-vue3-router": "^2.3.1",
+    "vue-loader": "^16.8.3"
   },
   "browserslist": [
     "last 10 Chrome versions",

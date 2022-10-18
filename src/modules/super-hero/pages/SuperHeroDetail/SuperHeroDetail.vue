@@ -2,10 +2,10 @@
   <form
     @submit.prevent="onSubmit"
     @reset.prevent="onReset"
-    class="q-gutter-md"
+    class="q-gutter-md form-container"
     novalidate
   >
-    <form-card title="superHeroes.detail.title">
+    <form-card :title="translate('superHeroes.detail.title')">
       <div class="row">
         <div class="col">
           <q-input
@@ -237,12 +237,3 @@ const onReset = () => {
   Object.assign(state, initialState());
 };
 </script>
-
-<style lang="scss" scoped>
-form {
-  margin-block-start: 1rem;
-  .col {
-    margin: 0.5rem;
-  }
-}
-</style>

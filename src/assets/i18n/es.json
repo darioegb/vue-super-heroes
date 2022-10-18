@@ -23,6 +23,10 @@
       }
     }
   },
+  "pageNotFound": {
+    "title": "404",
+    "subtitle": "Ups. Nada por aquí..."
+  },
   "globals": {
     "title": "ABM con quasar",
     "selectDefault": "Ninguno",
@@ -44,7 +48,8 @@
       "edit": "Editar",
       "delete": "Borrar",
       "reset": "Limpiar",
-      "view": "Ver"
+      "view": "Ver",
+      "backHome": "Ir a inicio"
     },
     "enums": {
       "genres": {

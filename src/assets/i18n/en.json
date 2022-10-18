@@ -23,6 +23,10 @@
       }
     }
   },
+  "pageNotFound": {
+    "title": "404",
+    "subtitle": "Oops. Nothing here..."
+  },
   "globals": {
     "title": "CRUD with quasar",
     "selectDefault": "None",
@@ -44,7 +48,8 @@
       "edit": "Edit",
       "delete": "Delete",
       "reset": "Reset",
-      "view": "View"
+      "view": "View",
+      "backHome": "Go Home"
     },
     "enums": {
       "genres": {

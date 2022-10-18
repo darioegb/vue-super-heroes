@@ -9,7 +9,7 @@ import { QSelect } from 'quasar';
 installQuasarPlugin();
 
 describe('Navbar.vue', () => {
-  const title = 'ABM con quasar';
+  const title = 'CRUD with quasar';
 
   it('should render', () => {
     const wrapper = mount(Navbar, {
@@ -27,7 +27,7 @@ describe('Navbar.vue', () => {
       },
     });
     const select = wrapper.findComponent(QSelect);
-    await select.setValue('en-US');
-    expect(wrapper.html()).toContain('English (US)');
+    await select.setValue('es');
+    expect(wrapper.html()).toContain('Español');
   });
 });

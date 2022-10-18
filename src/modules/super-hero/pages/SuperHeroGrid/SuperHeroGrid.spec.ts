@@ -70,7 +70,7 @@ describe('SuperHeroGrid.vue', () => {
     });
     const colums = (wrapper.vm as unknown as { columns: Column<SuperHero>[] })
       .columns;
-    colums[1].format && expect(colums[1].format('1')).toBe('Masculino');
+    colums[1].format && expect(colums[1].format('1')).toBe('Male');
   });
 
   it('should change filter value when the input value is changed', async () => {
@@ -112,7 +112,7 @@ describe('SuperHeroGrid.vue', () => {
     });
     const spy = jest.spyOn(
       (wrapper as unknown as Record<string, VMDelete>).vm.$q,
-      'notify'
+      'notify',
     );
     await flushPromises();
     const childs = wrapper.findAllComponents(GridItem as never);
@@ -123,7 +123,7 @@ describe('SuperHeroGrid.vue', () => {
     await buttons[3].trigger('click');
     await flushPromises();
     expect(spy).toHaveBeenCalledWith(
-      'El superheoe ha sido eliminado exitosamente'
+      'super hero has been successfully removed',
     );
   });
 
@@ -137,7 +137,7 @@ describe('SuperHeroGrid.vue', () => {
     });
     const spy = jest.spyOn(
       (wrapper as unknown as Record<string, VMDelete>).vm.$q,
-      'notify'
+      'notify',
     );
     await flushPromises();
     const childs = wrapper.findAllComponents(GridItem as never);
@@ -148,7 +148,7 @@ describe('SuperHeroGrid.vue', () => {
     await buttons[3].trigger('click');
     await flushPromises();
     expect(spy).toHaveBeenCalledWith({
-      message: 'Ocurrió un error al eliminar un superheroe',
+      message: 'An error occurred while deleting a super hero',
       type: 'negative',
     });
   });
