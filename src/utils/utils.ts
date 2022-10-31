@@ -1,7 +1,7 @@
 import { ref, StorageReference } from 'firebase/storage';
 
 import { firebaseStorage } from 'src/config/firebase';
-import { pictureBasePath } from 'src/constants';
+import { pictureBasePath } from 'src/globals';
 import { Option, RequestGrid, ServerPaginationConfig } from 'src/interfaces';
 
 /**

@@ -30,7 +30,7 @@ const actions: ActionTree<SuperHeroState, State> = {
       method: 'put',
       data: payload,
     });
-    await exec();
+    await exec({ showErrorMessage: true, resource: resourceUrl });
     if (isError.value) return isError.value;
 
     commit('updateSuperHero', { ...(data && data.value) });
@@ -43,7 +43,7 @@ const actions: ActionTree<SuperHeroState, State> = {
       method: 'post',
       data: payload,
     });
-    await exec();
+    await exec({ showErrorMessage: true, resource: resourceUrl });
     if (isError.value) return isError.value;
 
     commit('addSuperHero', data?.value);
@@ -55,7 +55,7 @@ const actions: ActionTree<SuperHeroState, State> = {
       url: `${resourceUrl}/${payload}`,
       method: 'delete',
     });
-    await exec();
+    await exec({ showErrorMessage: true, resource: resourceUrl });
     if (isError.value) return isError.value;
 
     commit('deleteSuperHero', payload);

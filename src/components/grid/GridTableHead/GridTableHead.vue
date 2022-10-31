@@ -9,7 +9,14 @@
       {{ col.label }}
     </q-th>
     <q-th class="text-right">
-      <q-btn flat round color="primary" icon="add" @click="onAddItemClicked" />
+      <q-btn
+        flat
+        round
+        color="primary"
+        icon="add"
+        aria-label="Icon button with a add icon"
+        @click="onAddItemClicked"
+      />
     </q-th>
   </q-tr>
 </template>

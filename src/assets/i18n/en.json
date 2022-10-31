@@ -76,16 +76,17 @@
         "success": "{value} has been successfully removed",
         "error": "An error occurred while deleting a {value}"
       },
+      "bgAsync": "It will be saved in the cache, when the connection is recovered the data will be sent to the server",
       "imageError": "An error occurred while uploading image"
     }
   },
   "validations": {
     "required": "The field is required.",
-    "maxlength": "The maximum length allowed is {param}.",
-    "minlength": "The minimum allowed length is {param}.",
+    "maxLength": "The maximum length allowed is {max}.",
+    "minLength": "The minimum allowed length is {min}.",
     "email": "It is not a valid email.",
-    "min": "The minimum allowed is {param}.",
-    "max": "The maximum allowed is {param}.",
+    "minValue": "The minimum allowed is {min}.",
+    "maxValue": "The maximum allowed is {max}.",
     "fileSize": "The file is too large",
     "pattern": {
       "numeric": "The valid format is numeric.",

@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import { defaultPageConfig } from 'src/constants';
+import { defaultPageConfig } from 'src/globals';
 import { SuperHeroState } from 'src/modules/super-hero/interfaces';
 
 const mockFn = jest.fn();

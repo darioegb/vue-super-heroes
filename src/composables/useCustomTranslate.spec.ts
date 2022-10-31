@@ -3,8 +3,8 @@ import { describe, expect, it } from '@jest/globals';
 import { shallowMount } from '@vue/test-utils';
 
 import i18n from 'src/config/i18n';
-import { GenreEnum } from 'src/constants';
 import { useCustomTranslate } from './useCustomTranslate';
+import { GenreEnum } from 'src/enums';
 
 const StubComponent = {
   template: `
