@@ -41,9 +41,10 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import { defaultPageConfig, GenreEnum, rowsPerPageConfig } from 'src/constants';
+import { defaultPageConfig, rowsPerPageConfig } from 'src/globals';
 import { Column, PageConfig, RequestGrid } from 'src/interfaces';
 import { useCustomTranslate } from 'src/composables';
+import { GenreEnum } from 'src/enums';
 import { SuperHero } from 'src/modules/super-hero/interfaces';
 import { GridTableHead, GridItem, GridTop, EmptyGrid } from 'src/components';
 import { useSuperHero } from 'src/modules/super-hero/composables';
@@ -141,32 +142,24 @@ const onRequest = async (props: unknown) => {
   pagination.value.rowsNumber = count;
 };
 
-const handlerAddOrEditOrView = (item?: unknown, view?: boolean) => {
+const handlerAddOrEditOrView = (item?: unknown, view?: boolean): void => {
   const superHero = item as SuperHero;
-  if (!superHero?.id) {
-    void router.push({ name: 'SuperHeroNew' });
-  } else {
-    setSelectedSuperHero(superHero);
-    void router.push({
-      name: 'SuperHeroDetail',
-      params: { id: superHero.id },
-      query: view ? { view: String(view) } : undefined,
-    });
-  }
+  if (!superHero?.id) return void router.push({ name: 'SuperHeroNew' });
+  setSelectedSuperHero(superHero);
+  void router.push({
+    name: 'SuperHeroDetail',
+    params: { id: superHero.id },
+    query: view ? { view: String(view) } : undefined,
+  });
 };
 
 const handlerDelete = async (id: string) => {
-  const toastParam = translate('superHeroes.detail.title').toLowerCase();
   const isError = await deleteSuperHero(id);
-  if (isError) {
-    $quasar.notify({
-      message: translate('globals.toasts.remove.error', { value: toastParam }),
-      type: 'negative',
-    });
-    return;
-  }
+  if (isError) return;
   $quasar.notify(
-    translate('globals.toasts.remove.success', { value: toastParam }),
+    translate('globals.toasts.remove.success', {
+      value: translate('superHeroes.detail.title').toLowerCase(),
+    }),
   );
   await onRequest({ pagination: pagination.value, filter: filter.value });
 };

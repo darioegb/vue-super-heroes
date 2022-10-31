@@ -91,7 +91,7 @@
             type="number"
             v-model.number="weight"
             :readonly="view"
-            :label="translate('superHeroes.grid.columns.picture')"
+            :label="translate('superHeroes.grid.columns.weight')"
             :error-message="v$.weight.$errors[0]?.$message.toString()"
             :error="v$.weight.$error"
             @blur="v$.weight.$touch"
@@ -125,11 +125,8 @@ import {
   convertEnumToKeyValueArray,
   fileSize,
 } from 'src/utils';
-import {
-  defaultFormControlSizes,
-  GenreEnum,
-  httpMethodKeys,
-} from 'src/constants';
+import { defaultFormControlSizes, httpMethodKeys } from 'src/globals';
+import { GenreEnum } from 'src/enums';
 import { useCustomTranslate } from 'src/composables';
 import { SuperHero, SuperHeroForm } from 'src/modules/super-hero/interfaces';
 import { useSuperHero } from 'src/modules/super-hero/composables';
@@ -165,8 +162,9 @@ const getGenreByValue = (value: string | GenreEnum): Option =>
 const state = reactive<SuperHeroForm>(
   props.id && selectedItem
     ? {
+        ...initialState(),
         ...selectedItem,
-        genre: getGenreByValue(selectedItem.genre),
+        genre: getGenreByValue(selectedItem.genre as never),
         picture: undefined,
       }
     : initialState(),
@@ -191,22 +189,17 @@ const rules = computed(() => ({
     fileSize,
   },
 }));
-const v$ = useVuelidate(rules, state, { $lazy: true });
+const v$ = useVuelidate(rules, state as never, { $lazy: true });
 
 const onSubmit = () => {
   v$.value.$touch();
   if (v$.value.$invalid) return;
-  if (picture?.value) {
-    isUploading.value = true;
-  } else {
-    void saveOrUpdate();
-  }
+  if (!picture?.value) void saveOrUpdate();
+  isUploading.value = true;
 };
 
 const saveOrUpdate = async (downloadURL?: string) => {
-  const toastParam = translate('superHeroes.detail.title').toLowerCase();
   const isNew = !selectedItem?.id;
-  const actionType = isNew ? httpMethodKeys.post : httpMethodKeys.put;
   const data: SuperHero = {
     ...state,
     id: selectedItem?.id,
@@ -217,18 +210,17 @@ const saveOrUpdate = async (downloadURL?: string) => {
     ? await createSuperHero(data)
     : await updateSuperHero(data);
 
-  $quasar.notify(
-    isError
-      ? {
-          message: translate(`globals.toasts.${actionType}.error`, {
-            value: toastParam,
-          }),
-          type: 'negative',
-        }
-      : translate(`globals.toasts.${actionType}.success`, {
-          value: toastParam,
-        }),
-  );
+  !isError &&
+    $quasar.notify(
+      translate(
+        `globals.toasts.${
+          isNew ? httpMethodKeys.post : httpMethodKeys.put
+        }.success`,
+        {
+          value: translate('superHeroes.detail.title').toLowerCase(),
+        },
+      ),
+    );
   history.back();
 };
 

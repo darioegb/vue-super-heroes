@@ -21,6 +21,7 @@
         flat
         round
         icon="visibility"
+        aria-label="Icon button with a visibility icon"
         @click="onViewItemClicked(tableProps.row)"
       />
       <q-btn
@@ -28,6 +29,7 @@
         round
         icon="edit"
         color="primary"
+        aria-label="Icon button with a edit icon"
         @click="onEditItemClicked(tableProps.row)"
       />
       <q-btn
@@ -35,6 +37,7 @@
         round
         icon="delete"
         color="negative"
+        aria-label="Icon button with a delete icon"
         @click="onDeleteItemClicked(tableProps.row)"
       />
     </q-td>

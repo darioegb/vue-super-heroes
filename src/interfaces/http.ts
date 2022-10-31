@@ -33,5 +33,10 @@ export interface AxiosResponse<T> {
   isError: Ref<boolean>;
   data?: Ref<T>;
   count?: Ref<number>;
-  exec: () => Promise<void>;
+  exec: (config?: AxiosExecConfig) => Promise<void>;
+}
+
+export interface AxiosExecConfig {
+  showErrorMessage?: boolean;
+  resource?: string;
 }

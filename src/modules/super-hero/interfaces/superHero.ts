@@ -1,8 +1,8 @@
 import { ComputedRef } from 'vue';
 
-import { GenreEnum } from 'src/constants';
 import { Option, RequestGrid } from 'src/interfaces';
 import { GenericOrUndefined } from 'src/types';
+import { GenreEnum } from 'src/enums';
 
 interface SuperHeroCommons {
   name: string;

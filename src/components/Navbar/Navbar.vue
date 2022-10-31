@@ -29,7 +29,7 @@ const appLanguages = languages.filter((lang) =>
   ['es', 'en-US'].includes(lang.isoName),
 );
 const langOptions = appLanguages.map((lang) => ({
-  label: lang.nativeName,
+  label: lang.nativeName.split('(')[0],
   value: lang.isoName,
 }));
 
@@ -61,6 +61,10 @@ watch(lang, async (val) => {
   div {
     display: flex;
     align-items: center;
+  }
+  :deep(.q-field__native),
+  :deep(.q-field__append) {
+    color: white;
   }
 }
 </style>

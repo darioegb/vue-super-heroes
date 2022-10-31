@@ -5,7 +5,7 @@ import { Meta, StoryFn } from '@storybook/vue3';
 import vueRouter from 'storybook-vue3-router';
 import useVuelidate from '@vuelidate/core';
 import { required, minLength, maxLength } from '@vuelidate/validators';
-import { defaultFormControlSizes } from 'src/constants';
+import { defaultFormControlSizes } from 'src/globals';
 import { reactive, toRefs, computed } from 'vue';
 
 export default {
