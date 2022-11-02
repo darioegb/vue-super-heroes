@@ -1,5 +1,5 @@
 import { Notify } from 'quasar';
-import { httpMethodKeys } from 'src/globals';
+import { HTTP_METHOD_KEYS } from 'src/globals';
 import { reactive, toRefs, UnwrapRef } from 'vue';
 import axios from 'axios';
 
@@ -55,7 +55,7 @@ export const useAxios = <T>({
     navigator.onLine
       ? Notify.create({
           message: translate(
-            `globals.toasts.${httpMethodKeys[method as never] as string}.error`,
+            `globals.toasts.${HTTP_METHOD_KEYS[method]}.error`,
             {
               value: translate(`${resource}.detail.title`),
             },

@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import { defaultPageConfig } from 'src/globals';
+import { DEFAULT_PAGE_CONFIG } from 'src/globals';
 import { SuperHeroState } from 'src/modules/super-hero/interfaces';
 
 // must define this above the `useSuperHero` import, otherwise the ReferenceError is raised.
@@ -14,7 +14,7 @@ jest.mock('vuex', () => ({
 }));
 
 describe('useSuperHero', () => {
-  const pageConfig = { ...defaultPageConfig };
+  const pageConfig = { ...DEFAULT_PAGE_CONFIG };
   const updatedSuperHero = {
     ...superHeroesState.superHeroes[0],
     specialty: 'esto es una prueba nueva',

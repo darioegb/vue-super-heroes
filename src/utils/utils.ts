@@ -1,7 +1,7 @@
 import { ref, StorageReference } from 'firebase/storage';
 
 import { firebaseStorage } from 'src/config/firebase';
-import { pictureBasePath } from 'src/globals';
+import { PICTURE_BASE_PATH } from 'src/globals';
 import { Option, RequestGrid, ServerPaginationConfig } from 'src/interfaces';
 
 /**
@@ -36,7 +36,7 @@ export const fileToBase64String = (file: File): Promise<string> => {
 };
 
 export const fileRef = (fileName: string): StorageReference =>
-  ref(firebaseStorage, `${pictureBasePath}/${fileName}`);
+  ref(firebaseStorage, `${PICTURE_BASE_PATH}/${fileName}`);
 
 export const fileName = (): string => `picture-${Date.now()}`;
 

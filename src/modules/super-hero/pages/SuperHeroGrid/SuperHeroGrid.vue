@@ -4,7 +4,7 @@
       class="my-sticky-header-table"
       :title="translate('superHeroes.title')"
       :rows="rows"
-      :rows-per-page-options="rowsPerPageConfig"
+      :rows-per-page-options="ROWS_PER_PAGE_CONFIG"
       :columns="columns"
       row-key="id"
       v-model:pagination="pagination"
@@ -41,7 +41,7 @@ import { useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useI18n } from 'vue-i18n';
 
-import { defaultPageConfig, rowsPerPageConfig } from 'src/globals';
+import { DEFAULT_PAGE_CONFIG, ROWS_PER_PAGE_CONFIG } from 'src/globals';
 import { Column, PageConfig, RequestGrid } from 'src/interfaces';
 import { useCustomTranslate } from 'src/composables';
 import { GenreEnum } from 'src/enums';
@@ -63,7 +63,7 @@ const {
 } = useSuperHero();
 const rows = ref<SuperHero[]>([]);
 const filter = ref<string>('');
-const pagination = ref<PageConfig<SuperHero>>(defaultPageConfig);
+const pagination = ref<PageConfig<SuperHero>>(DEFAULT_PAGE_CONFIG);
 const columns: ComputedRef<Column<SuperHero>[]> = computed(() => [
   {
     name: 'name',

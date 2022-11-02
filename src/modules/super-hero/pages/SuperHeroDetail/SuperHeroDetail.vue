@@ -125,7 +125,7 @@ import {
   convertEnumToKeyValueArray,
   fileSize,
 } from 'src/utils';
-import { defaultFormControlSizes, httpMethodKeys } from 'src/globals';
+import { DEFAULT_FORM_CONTROL_SIZES, HTTP_METHOD_KEYS } from 'src/globals';
 import { GenreEnum } from 'src/enums';
 import { useCustomTranslate } from 'src/composables';
 import { SuperHero, SuperHeroForm } from 'src/modules/super-hero/interfaces';
@@ -144,7 +144,6 @@ const { selectedSuperHero, updateSuperHero, createSuperHero } = useSuperHero();
 const genres = convertEnumToKeyValueArray(GenreEnum);
 const selectedItem = selectedSuperHero.value;
 const isUploading = ref<boolean>(false);
-const { text, number, textarea } = defaultFormControlSizes;
 
 const initialState = () => ({
   name: '',
@@ -164,31 +163,38 @@ const state = reactive<SuperHeroForm>(
     ? {
         ...initialState(),
         ...selectedItem,
-        genre: getGenreByValue(selectedItem.genre as never),
+        genre: getGenreByValue(selectedItem.genre),
         picture: undefined,
       }
     : initialState(),
 );
 const { name, genre, specialty, age, height, picture, weight } = toRefs(state);
-const rules = computed(() => ({
-  name: {
-    required,
-    minLength: minLength(text.min),
-    maxLength: maxLength(text.max),
-  },
-  genre: { required },
-  specialty: {
-    required,
-    minLength: minLength(textarea.min),
-    maxLength: maxLength(textarea.max),
-  },
-  age: { minValue: minValue(number.min) },
-  height: { minValue: minValue(number.min) },
-  weight: { minValue: minValue(number.min) },
-  picture: {
-    fileSize,
-  },
-}));
+const rules = computed(() => {
+  const {
+    text: { max: textMax, min: textMin },
+    number: { min: numberMin },
+    textarea: { max: textareaMax, min: textareaMin },
+  } = DEFAULT_FORM_CONTROL_SIZES;
+  return {
+    name: {
+      required,
+      minLength: minLength(textMin),
+      maxLength: maxLength(textMax),
+    },
+    genre: { required },
+    specialty: {
+      required,
+      minLength: minLength(textareaMin),
+      maxLength: maxLength(textareaMax),
+    },
+    age: { minValue: minValue(numberMin) },
+    height: { minValue: minValue(numberMin) },
+    weight: { minValue: minValue(numberMin) },
+    picture: {
+      fileSize,
+    },
+  };
+});
 const v$ = useVuelidate(rules, state as never, { $lazy: true });
 
 const onSubmit = () => {
@@ -214,7 +220,7 @@ const saveOrUpdate = async (downloadURL?: string) => {
     $quasar.notify(
       translate(
         `globals.toasts.${
-          isNew ? httpMethodKeys.post : httpMethodKeys.put
+          isNew ? HTTP_METHOD_KEYS.post : HTTP_METHOD_KEYS.put
         }.success`,
         {
           value: translate('superHeroes.detail.title').toLowerCase(),

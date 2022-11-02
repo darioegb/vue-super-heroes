@@ -5,7 +5,7 @@ import { Meta, StoryFn } from '@storybook/vue3';
 import vueRouter from 'storybook-vue3-router';
 import useVuelidate from '@vuelidate/core';
 import { required, minLength, maxLength } from '@vuelidate/validators';
-import { defaultFormControlSizes } from 'src/globals';
+import { DEFAULT_FORM_CONTROL_SIZES } from 'src/globals';
 import { reactive, toRefs, computed } from 'vue';
 
 export default {
@@ -51,7 +51,7 @@ export default {
 const Template: StoryFn<typeof FormCard> = (args: Record<string, unknown>) => ({
   components: { FormCard },
   setup() {
-    const { text } = defaultFormControlSizes;
+    const { text } = DEFAULT_FORM_CONTROL_SIZES;
     const state = reactive({
       name: '',
     });

@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import { defaultPageConfig } from 'src/globals';
+import { DEFAULT_PAGE_CONFIG } from 'src/globals';
 import { SuperHeroState } from 'src/modules/super-hero/interfaces';
 
 const mockFn = jest.fn();
@@ -19,7 +19,7 @@ describe('super-hero-module', () => {
     superHeroes: [],
     selectedSuperHero: undefined,
   };
-  const pageConfig = { ...defaultPageConfig };
+  const pageConfig = { ...DEFAULT_PAGE_CONFIG };
   const updatedSuperHero = {
     ...superHeroesState.superHeroes[0],
     specialty: 'esto es una prueba nueva',

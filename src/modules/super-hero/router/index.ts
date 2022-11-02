@@ -1,3 +1,4 @@
+import { ID_KEY } from 'src/globals';
 import { BaseLayout } from 'src/layouts';
 
 const getDetailRoute = (): Promise<unknown> =>
@@ -19,11 +20,11 @@ export default {
       component: getDetailRoute,
     },
     {
-      path: 'detail/:id',
+      path: `detail/:${ID_KEY as string}`,
       name: 'SuperHeroDetail',
       component: getDetailRoute,
       props: (
-        route: Record<string, Record<string, string>>
+        route: Record<string, Record<string, string>>,
       ): Record<string, string | boolean> => ({
         id: route.params.id,
         view: route.query.view === 'true',

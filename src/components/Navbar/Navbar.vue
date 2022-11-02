@@ -20,23 +20,25 @@
 
 <script setup lang="ts">
 import { QuasarLanguage, useQuasar } from 'quasar';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import languages from 'quasar/lang/index.json';
 import { useI18n } from 'vue-i18n';
 import { useOnline } from 'src/composables';
 
-const appLanguages = languages.filter((lang) =>
-  ['es', 'en-US'].includes(lang.isoName),
+const appLanguages = languages.filter(({ isoName }) =>
+  ['es', 'en-US'].includes(isoName),
 );
-const langOptions = appLanguages.map((lang) => ({
-  label: lang.nativeName.split('(')[0],
-  value: lang.isoName,
-}));
-
 const $q = useQuasar();
 const lang = ref(localStorage.getItem('lang') || $q.lang.isoName);
 const { t: translate, locale } = useI18n({ useScope: 'global' });
 const { online } = useOnline();
+
+const langOptions = computed(() =>
+  appLanguages.map(({ isoName }) => ({
+    label: translate(`globals.locales.${isoName.substring(0, 2)}`),
+    value: isoName,
+  })),
+);
 
 watch(lang, async (val) => {
   // dynamic import, so loading on demand only

@@ -1,27 +1,25 @@
 import { PageConfig } from 'src/interfaces';
 
-export const assetRoot = 'src/assets';
-export const imgSrc = `${assetRoot}/img`;
-export const idKey = 'id';
-export const httpMethodKeys = {
+export const ID_KEY = 'id';
+export const HTTP_METHOD_KEYS: Record<string, string> = {
   get: 'get',
   delete: 'remove',
   post: 'create',
   put: 'update',
 };
-export const rowsPerPageConfig = [5, 10, 15, 20, 30, 50, 100, 0];
-export const defaultPageConfig: PageConfig<unknown> = {
+export const ROWS_PER_PAGE_CONFIG = [5, 10, 15, 20, 30, 50, 100, 0];
+export const DEFAULT_PAGE_CONFIG: PageConfig<unknown> = {
   page: 1,
   rowsPerPage: 5,
   rowsNumber: 100,
   sortBy: 'id',
   descending: false,
 };
-export const regExp = {
-  alphabet: /^[A-Za-z ]*$/,
-};
-export const pictureBasePath = 'pictures';
-export const defaultFormControlSizes = {
+export const PICTURE_BASE_PATH = 'pictures';
+export const DEFAULT_FORM_CONTROL_SIZES: Record<
+  string,
+  Record<string, number>
+> = {
   text: {
     min: 3,
     max: 60,

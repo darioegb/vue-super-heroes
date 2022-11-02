@@ -63,6 +63,10 @@
         "title": "Are you sure you want to remove {value}?"
       }
     },
+    "locales": {
+      "es": "Spanish",
+      "en": "English"
+    },
     "toasts": {
       "create": {
         "success": "{value} was added successfully",
