@@ -13,10 +13,8 @@
         class="q-mt-xl"
         color="white"
         text-color="blue"
-        unelevated
         to="/"
         :label="translate('globals.buttons.backHome')"
-        no-caps
       />
     </div>
   </div>
