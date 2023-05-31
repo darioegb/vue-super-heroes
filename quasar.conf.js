@@ -146,7 +146,6 @@ module.exports = configure(function (ctx) {
         short_name: 'superheroes',
         description: 'A Quasar Framework app',
         display: 'standalone',
-        orientation: 'portrait',
         background_color: '#ffffff',
         theme_color: '#027be3',
         start_url: '.',

@@ -82,11 +82,9 @@ It is a kickoff vue project with quasar framework of a superhero crud using a sc
     |-- testing
     |-- types
     |-- utils
-    |-- app.vue|spec.ts
     |-- sw.js
     |-- assets
         |-- i18n
-        |-- icons
         |-- imgs
         |-- scss
     |-- App.vue|spec.ts

@@ -12,7 +12,7 @@
     "build": "quasar build",
     "build:pwa": "quasar build -m pwa",
     "build:pwa:debug": "quasar build -m pwa -d",
-    "lint": "eslint --ext .js,.ts,.vue ./",
+    "lint": "eslint --ext .ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test:unit": "jest --updateSnapshot",
     "test:unit:ci": "jest --ci",
